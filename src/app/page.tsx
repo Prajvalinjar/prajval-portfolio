@@ -1,65 +1,198 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import BootSequence from "@/components/BootSequence";
+import BackgroundEngine from "@/components/BackgroundEngine";
+import CustomCursor from "@/components/CustomCursor";
+import HeroReveal from "@/components/HeroReveal";
+import AIAssistant from "@/components/AIAssistant";
+import JourneyChapter from "@/components/journey/JourneyChapter";
+import ProjectsChapter from "@/components/projects/ProjectsChapter";
+import LeftNavigation from "@/components/journey/LeftNavigation";
+import EngineeringStackChapter from "@/components/stack/EngineeringStackChapter";
+import ExperienceChapter from "@/components/experience/ExperienceChapter";
+import AiAssistantChapter from "@/components/ai-assistant/AiAssistantChapter";
+import ContactChapter from "@/components/contact/ContactChapter";
+import { useTransition } from "@/components/TransitionProvider";
+
+import { ToastProvider } from "@/components/ToastContext";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+
+function PortfolioApp() {
+  const { hasBooted } = useTransition();
+  const [mounted, setMounted] = useState(false);
+  const [isScrollLocked, setIsScrollLocked] = useState(!hasBooted);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useKeyboardShortcuts();
+
+  // Client hydration check
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Sync scroll lock with contextual boot state
+  useEffect(() => {
+    if (hasBooted) {
+      setIsScrollLocked(false);
+    }
+  }, [hasBooted]);
+
+  // Handle initial URL hash scroll & popstate browser back/forward navigation
+  useEffect(() => {
+    if (!hasBooted || !mounted) return;
+
+    const scrollToHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        const targetId = hash === "hero" ? "hero-section" : hash;
+        const el = document.getElementById(targetId);
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
+    };
+
+    scrollToHash();
+    window.addEventListener("popstate", scrollToHash);
+    return () => window.removeEventListener("popstate", scrollToHash);
+  }, [hasBooted, mounted]);
+
+  // Bulletproof global scroll lock
+  useEffect(() => {
+    if (isScrollLocked) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isScrollLocked]);
+
+  // Track scroll position to show sidebar when user scrolls past Hero into Journey
+  useEffect(() => {
+    if (!hasBooted) return;
+
+    const handleScroll = () => {
+      const heroEl = document.getElementById("hero-section");
+      if (heroEl) {
+        const heroBottom = heroEl.getBoundingClientRect().bottom;
+        if (heroBottom < window.innerHeight * 0.75) {
+          setShowSidebar(true);
+        } else {
+          setShowSidebar(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasBooted]);
+
+  // Initial SSR / Hydration Fallback: Black screen to prevent any FOUC before JS mounts
+  if (!mounted) {
+    return <div className="w-full min-h-screen bg-[#030509]" />;
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="relative w-full min-h-screen bg-[#030509] overflow-x-clip">
+      <AnimatePresence mode="wait">
+        {!hasBooted ? (
+          /* STEP 1: Boot Sequence (ONLY component mounted in DOM during startup) */
+          <motion.div
+            key="boot-sequence-screen"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="w-full min-h-screen"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <BootSequence onUnlockScroll={() => setIsScrollLocked(false)} />
+          </motion.div>
+        ) : (
+          /* STEP 2: Main Portfolio Application (Mounts AFTER boot completes with 250ms crossfade) */
+          <motion.div
+            key="portfolio-application"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="relative flex flex-col items-center justify-start w-full min-h-screen"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <CustomCursor />
+            <BackgroundEngine />
+            
+            {/* 1. CINEMATIC HERO SECTION: Distraction-free, full width personal introduction */}
+            <section id="hero-section" className="w-full relative z-20">
+              <HeroReveal />
+              <AIAssistant />
+            </section>
+
+            {/* 2. INTERACTIVE PORTFOLIO APP SHELL (Journey → Contact): 2-Column Layout with Animated Sidebar */}
+            <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10 relative z-10">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start w-full relative">
+                
+                {/* Animated Sidebar Column (265px width, sticky on desktop, slides in when reaching Journey) */}
+                <aside className="w-full lg:w-[265px] shrink-0 lg:sticky lg:top-20 z-40" role="navigation" aria-label="Main Portfolio Sidebar Navigation">
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ 
+                      opacity: showSidebar ? 1 : 0, 
+                      x: showSidebar ? 0 : -30,
+                      pointerEvents: showSidebar ? "auto" : "none"
+                    }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full"
+                  >
+                    <LeftNavigation />
+                  </motion.div>
+                </aside>
+
+                {/* Independent Main Content Column */}
+                <main className="flex-1 w-full min-w-0 flex flex-col gap-14 lg:gap-20 z-10">
+                  <section id="journey" className="w-full pt-6" role="region" aria-label="My Journey">
+                    <JourneyChapter />
+                  </section>
+                  
+                  <section id="projects" className="w-full" role="region" aria-label="Project Intelligence Center">
+                    <ProjectsChapter />
+                  </section>
+
+                  <section id="engineering-stack" className="w-full" role="region" aria-label="Tech Ecosystem">
+                    <EngineeringStackChapter />
+                  </section>
+
+                  <section id="professional-growth" className="w-full" role="region" aria-label="Professional Growth">
+                    <ExperienceChapter />
+                  </section>
+
+                  <section id="ai-assistant" className="w-full" role="region" aria-label="AI Assistant Chapter">
+                    <AiAssistantChapter />
+                  </section>
+
+                  <section id="contact" className="w-full" role="region" aria-label="Let's Connect">
+                    <ContactChapter />
+                  </section>
+                </main>
+
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
+export default function Home() {
+  return (
+    <ToastProvider>
+      <PortfolioApp />
+    </ToastProvider>
+  );
+}
+

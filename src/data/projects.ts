@@ -1,0 +1,162 @@
+import { Project } from "@/types/project";
+
+export const PROJECTS: Project[] = [
+  {
+    id: "resumeiq-ai",
+    title: "ResumeIQ AI",
+    subtitle: "AI Resume Intelligence Platform",
+    mission: "Build an AI-powered resume intelligence platform evaluating user profiles with ATS scoring, keyword extraction, and personalized feedback.",
+    challenge: "Job candidates submit resumes without understanding ATS algorithms, resulting in low callback rates.",
+    solution: "Developed ResumeIQ AI with real-time ATS scoring, LLM feedback pipelines, history logging, and downloadable PDF reports.",
+    impact: "94 ATS Accuracy, 500+ Resume Tests",
+    features: [
+      "AI Resume Analysis",
+      "ATS Score Prediction",
+      "Resume Upload & OCR",
+      "Skill Extraction",
+      "Personalized Suggestions",
+      "Resume History",
+      "Download PDF Report",
+      "Supabase Authentication",
+      "Interactive Dashboard",
+      "Secure Cloud Storage"
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI", "Vercel"],
+    status: "Production",
+    category: "AI",
+    health: 98,
+    performance: 95,
+    complexity: "Advanced",
+    architecture: "Production Ready Cloud Serverless",
+    duration: "8 Weeks",
+    startDate: "Mar 2025",
+    completionDate: "May 2025",
+    image: "/images/project_resumeiq.png",
+    screenshots: [
+      "/images/project_resumeiq.png"
+    ],
+    liveUrl: "https://resumeiq-ai-self.vercel.app",
+    githubUrl: "https://github.com/Prajvalinjar/resumeiq-ai",
+    docUrl: "/resume.pdf",
+    deploymentPlatform: "Vercel",
+    lastUpdated: "May 18, 2025",
+    users: "500+",
+    tags: ["AI", "ATS", "ResumeIQ", "Full Stack", "OpenAI", "Supabase", "Completed"]
+  },
+  {
+    id: "transitops",
+    title: "TransitOps",
+    subtitle: "Enterprise Fleet Management Platform",
+    mission: "Digitize and centralize transport fleet operations with live tracking and intelligent trip dispatching.",
+    challenge: "Manual dispatching and paper-based vehicle logging created delay overhead and untracked operational costs.",
+    solution: "Built a centralized transport platform with route optimization, live status telemetry, driver management, and analytics.",
+    impact: "Real-time Fleet Scheduling & Route Optimization",
+    features: [
+      "Fleet Dashboard",
+      "Vehicle Telemetry Tracking",
+      "Trip Scheduling",
+      "Driver Assignment",
+      "Route Analytics",
+      "Cost & Fuel Reporting"
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase", "Leaflet Maps"],
+    status: "Production",
+    category: "Full Stack",
+    health: 92,
+    performance: 90,
+    complexity: "Advanced",
+    architecture: "Microservices & Real-time WebSockets",
+    duration: "10 Weeks",
+    startDate: "Jan 2025",
+    completionDate: "Mar 2025",
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&auto=format&fit=crop&q=80",
+    screenshots: [
+      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&auto=format&fit=crop&q=80"
+    ],
+    liveUrl: "https://transitops.vercel.app",
+    githubUrl: "https://github.com/Prajvalinjar/transitops",
+    docUrl: "/resume.pdf",
+    deploymentPlatform: "Vercel",
+    lastUpdated: "Mar 20, 2025",
+    users: "120+",
+    tags: ["Full Stack", "TransitOps", "Fleet", "Maps", "Supabase", "Next.js", "Completed"]
+  },
+  {
+    id: "customer-sales-analytics",
+    title: "Customer Sales Analytics",
+    subtitle: "Business Intelligence & Revenue Dashboard",
+    mission: "Transform multi-source raw customer transactional data into strategic revenue insights and KPI forecasts.",
+    challenge: "Siloed sales records across multiple retail branches lacked clear visualization of customer purchasing behavior.",
+    solution: "Executed python data pipeline cleaning with SQL analytics models and custom interactive Power BI dashboards.",
+    impact: "Automated Power BI Pipeline & 24% Efficiency Gain",
+    features: [
+      "Sales Dashboard",
+      "Revenue Trend Analysis",
+      "Regional Clustering",
+      "Customer RFM Insights",
+      "KPI Reports",
+      "Predictive Forecasting"
+    ],
+    techStack: ["Python", "Pandas", "NumPy", "SQL", "MySQL", "Power BI"],
+    status: "Research",
+    category: "Data Analytics",
+    health: 98,
+    performance: 96,
+    complexity: "Intermediate",
+    architecture: "ETL Pipeline & SQL Analytics Warehouse",
+    duration: "6 Weeks",
+    startDate: "Nov 2024",
+    completionDate: "Dec 2024",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+    screenshots: [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80"
+    ],
+    liveUrl: "https://sales-analytics.vercel.app",
+    githubUrl: "https://github.com/Prajvalinjar/customer-sales-analytics",
+    docUrl: "/resume.pdf",
+    deploymentPlatform: "Vercel",
+    lastUpdated: "Dec 15, 2024",
+    users: "BI Analysts",
+    tags: ["Data Analytics", "Customer Sales Analysis", "Python", "SQL", "Power BI", "Pandas", "Completed"]
+  },
+  {
+    id: "e-tongue",
+    title: "E-Tongue Dravya System",
+    subtitle: "AI-assisted Ayurvedic Sensor Classification",
+    mission: "Automate objective Ayurvedic liquid sample and dravya identification using sensor fusion and machine learning.",
+    challenge: "Subjective, manual assessment of chemical properties led to inconsistent quality control in liquid botanical extracts.",
+    solution: "Designed an embedded hardware-software sensor system with pH/TDS sensor array and custom classification ML models.",
+    impact: "High-accuracy Sensor Fusion Classification Prototype",
+    features: [
+      "pH & TDS Sensor Data Acquisition",
+      "Real-time Signal Analysis",
+      "Dravya Classification Model",
+      "Custom Database Schema",
+      "Hardware-Software Integration",
+      "Research Validation"
+    ],
+    techStack: ["Python", "OpenCV", "Machine Learning", "IoT", "Embedded System", "MySQL"],
+    status: "Prototype",
+    category: "IoT",
+    health: 85,
+    performance: 88,
+    complexity: "Advanced",
+    architecture: "Sensor Edge Node & ML Classifier",
+    duration: "12 Weeks",
+    startDate: "Aug 2024",
+    completionDate: "Nov 2024",
+    image: "/images/project_etongue.jpg",
+    screenshots: [
+      "/images/project_etongue.jpg"
+    ],
+    liveUrl: "https://e-tongue.vercel.app",
+    githubUrl: "https://github.com/Prajvalinjar/e-tongue",
+    docUrl: "/resume.pdf",
+    deploymentPlatform: "Embedded",
+    lastUpdated: "Nov 30, 2024",
+    users: "Lab Researchers",
+    tags: ["IoT", "E-Tongue", "Sensor Fusion", "Python", "Machine Learning", "Embedded", "In Progress"]
+  }
+];
+
+export type { Project, ProjectStatus, ProjectCategory } from "@/types/project";
