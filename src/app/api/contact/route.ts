@@ -3,7 +3,12 @@ import { getSupabaseAdmin } from '@/lib/supabase';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON request body' }, { status: 400 });
+    }
     const { name, email, message } = body;
 
     // Basic Validation
@@ -63,7 +68,11 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error('API Contact POST Error:', err);
-    return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });
+    let errorMessage = err?.message || 'Internal Server Error';
+    if (errorMessage.includes('fetch failed') || err?.cause?.code === 'ENOTFOUND') {
+      errorMessage = 'Unable to reach Supabase server. Please check your internet connection and verify NEXT_PUBLIC_SUPABASE_URL in .env.local.';
+    }
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -86,16 +95,25 @@ export async function GET(req: NextRequest) {
     }, { status: 200 });
   }
 
-  const { data, error } = await supabaseAdmin
-    .from('messages')
-    .select('*')
-    .order('created_at', { ascending: false });
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ messages: data || [] }, { status: 200 });
+  } catch (err: any) {
+    console.error('API Contact GET Error:', err);
+    let errorMessage = err?.message || 'Failed to fetch messages';
+    if (errorMessage.includes('fetch failed')) {
+      errorMessage = 'Unable to reach Supabase. Please check your internet connection or URL in .env.local.';
+    }
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
-
-  return NextResponse.json({ messages: data || [] }, { status: 200 });
 }
 
 // PATCH Endpoint to update message status (e.g., mark as read)
