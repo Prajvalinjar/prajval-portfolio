@@ -82,7 +82,7 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
         y: mousePos.y * 0.08
       }}
       transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
-      className="absolute top-[8%] sm:top-[5%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
+      className="absolute top-[8%] sm:top-[5%] lg:top-[12%] xl:top-[14%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
     >
       <div className="relative w-full h-full flex items-start justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -156,7 +156,7 @@ export const DesktopHero: React.FC = memo(() => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.0, ease: "easeOut" }}
-      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-24 sm:pt-28 md:pt-32 pb-8 overflow-hidden select-none"
+      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-24 sm:pt-28 md:pt-32 lg:pt-20 xl:pt-22 pb-8 lg:pb-6 overflow-hidden select-none"
     >
       {/* 1. CINEMATIC EARTH COMMAND CENTER BACKGROUND */}
       <EarthCinematicBackground 
@@ -265,7 +265,7 @@ export const DesktopHero: React.FC = memo(() => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-6xl px-6 -mt-12 sm:-mt-16 md:-mt-18 z-20 relative pointer-events-auto"
+        className="w-full max-w-6xl px-6 -mt-12 sm:-mt-16 md:-mt-18 lg:-mt-24 xl:-mt-28 z-20 relative pointer-events-auto"
       >
         <InteractiveCards />
       </motion.div>
@@ -285,7 +285,7 @@ export const DesktopHero: React.FC = memo(() => {
             handleScrollToJourney();
           }
         }}
-        className="mt-16 mb-8 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
+        className="mt-16 mb-8 lg:mt-10 lg:mb-4 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
       >
         <span className="text-[10px] font-mono tracking-widest text-secondary/60 group-hover:text-white transition-colors uppercase">
           Explore My Story <span className="opacity-50 group-hover:translate-y-1 inline-block transition-transform">↓</span>
