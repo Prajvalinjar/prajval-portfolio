@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export type SectionMood = "hero" | "journey" | "projects" | "engineering-stack" | "professional-growth" | "ai-assistant" | "contact";
 
@@ -82,6 +83,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
 };
 
 export default function BackgroundEngine() {
+  const isMobile = useIsMobile();
   const [currentSection, setCurrentSection] = useState<SectionMood>("hero");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -139,8 +141,8 @@ export default function BackgroundEngine() {
     };
     window.addEventListener("resize", handleResize);
 
-    // Particle Array
-    const particleCount = 65;
+    // Particle Array - Reduced on mobile to preserve GPU performance
+    const particleCount = isMobile ? 18 : 65;
     const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -155,7 +157,6 @@ export default function BackgroundEngine() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Smoothly parse current glow RGB
       currentRgb = activeMood.glowRgb;
 
       // Draw Particles & Connections
@@ -175,21 +176,23 @@ export default function BackgroundEngine() {
         ctx.fillStyle = `rgba(${currentRgb}, ${p.alpha * 0.7})`;
         ctx.fill();
 
-        // Connect nearby particles with subtle light lines
-        for (let j = i + 1; j < particleCount; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        // Connect nearby particles on desktop
+        if (!isMobile) {
+          for (let j = i + 1; j < particleCount; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 110) {
-            const lineAlpha = (1 - dist / 110) * 0.12;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(${currentRgb}, ${lineAlpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
+            if (dist < 110) {
+              const lineAlpha = (1 - dist / 110) * 0.12;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(${currentRgb}, ${lineAlpha})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
           }
         }
       }
@@ -203,7 +206,7 @@ export default function BackgroundEngine() {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [activeMood.glowRgb]);
+  }, [activeMood.glowRgb, isMobile]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">
@@ -220,13 +223,13 @@ export default function BackgroundEngine() {
 
       {/* Floating Light Orb 1 (Primary Accent) */}
       <motion.div
-        animate={{
+        animate={isMobile ? { x: 0, y: 0, scale: 1 } : {
           x: ["-10%", "10%", "-5%"],
           y: ["-5%", "15%", "0%"],
           scale: [1, 1.2, 1],
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-25 mix-blend-screen"
+        transition={isMobile ? { duration: 0 } : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 left-1/4 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full blur-[40px] sm:blur-[140px] opacity-15 sm:opacity-25 sm:mix-blend-screen"
         style={{
           background: `radial-gradient(circle, rgba(${activeMood.glowRgb}, 0.5) 0%, rgba(0,0,0,0) 70%)`,
         }}
@@ -234,13 +237,13 @@ export default function BackgroundEngine() {
 
       {/* Floating Light Orb 2 (Secondary Accent) */}
       <motion.div
-        animate={{
+        animate={isMobile ? { x: 0, y: 0, scale: 1 } : {
           x: ["10%", "-15%", "5%"],
           y: ["10%", "-10%", "5%"],
           scale: [1.1, 0.9, 1.1],
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] rounded-full blur-[150px] opacity-20 mix-blend-screen"
+        transition={isMobile ? { duration: 0 } : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[550px] h-[300px] sm:h-[550px] rounded-full blur-[40px] sm:blur-[150px] opacity-15 sm:opacity-20 sm:mix-blend-screen"
         style={{
           background: `radial-gradient(circle, rgba(${activeMood.secondaryGlowRgb}, 0.4) 0%, rgba(0,0,0,0) 70%)`,
         }}
@@ -306,10 +309,10 @@ export default function BackgroundEngine() {
 
       {/* LAYER 6: Film Grain & CRT Scanlines */}
       <div 
-        className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
+        className="hidden sm:block absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: 'repeat' }} 
       />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none mix-blend-overlay" />
+      <div className="hidden sm:block absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none mix-blend-overlay" />
 
       {/* LAYER 7: Soft Futuristic Vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#030509_90%)] pointer-events-none opacity-90" />

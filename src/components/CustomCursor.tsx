@@ -96,6 +96,16 @@ export default function CustomCursor() {
 
   if (!mounted) return null;
 
+  // Touch / Mobile devices don't have cursors - prevent GPU compositing overhead on mobile
+  if (
+    typeof window !== "undefined" &&
+    (window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window ||
+      window.innerWidth < 768)
+  ) {
+    return null;
+  }
+
   const colorConfig = SECTION_COLORS[activeSection] || SECTION_COLORS.hero;
 
   return (

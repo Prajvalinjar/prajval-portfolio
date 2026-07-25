@@ -69,7 +69,7 @@ export default function HeroHUD() {
         <div className="w-4 h-4 border-t-2 border-r-2 border-[#00E5FF]/60 -mr-1 -mt-1 self-end mb-1" />
 
         {/* Engineer Mode Indicator Pill */}
-        <div className="px-3 py-1 rounded-lg border border-white/10 bg-[#060810]/80 backdrop-blur-md flex items-center gap-2 text-[10px] font-mono tracking-widest text-secondary/70 uppercase">
+        <div className="px-3 py-1 rounded-lg border border-white/10 bg-[#060810]/95 sm:bg-[#060810]/80 backdrop-blur-none sm:backdrop-blur-md flex items-center gap-2 text-[10px] font-mono tracking-widest text-secondary/70 uppercase">
           <span>ENGINEER MODE</span>
           <div className="flex gap-[2px]">
             {[1, 2, 3, 4, 5, 6].map((i) => (

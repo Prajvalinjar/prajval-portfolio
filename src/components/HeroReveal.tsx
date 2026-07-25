@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveCards from "./InteractiveCards";
 import HeroHUD from "./HeroHUD";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ROLES = [
   "Data Analyst",
@@ -15,33 +16,34 @@ const ROLES = [
 
 interface EarthCinematicBackgroundProps {
   mousePos: { x: number; y: number };
+  isMobile: boolean;
 }
 
-const EarthCinematicBackground = ({ mousePos }: EarthCinematicBackgroundProps) => (
+const EarthCinematicBackground = ({ mousePos, isMobile }: EarthCinematicBackgroundProps) => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#010309]">
     {/* 1. DEEP BLACK SPACE BASE LAYER */}
     <div className="absolute inset-0 bg-[#010309]" />
 
-    {/* 2. COSMIC PURPLE / CYAN NEBULA DUST (Soft ambient depth, low brightness) */}
-    <div className="absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] blur-[110px] opacity-45 pointer-events-none transform -rotate-12" />
-    <div className="absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] blur-[110px] opacity-45 pointer-events-none transform rotate-12" />
+    {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
+    <div className="absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] blur-[40px] sm:blur-[110px] opacity-35 sm:opacity-45 pointer-events-none transform -rotate-12" />
+    <div className="absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] blur-[40px] sm:blur-[110px] opacity-35 sm:opacity-45 pointer-events-none transform rotate-12" />
 
-    {/* 3. MULTI-SCALE DRIFTING STARFIELD (Layer 2) */}
+    {/* 3. MULTI-SCALE DRIFTING STARFIELD */}
     <motion.div
-      animate={{
+      animate={isMobile ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.12,
         y: mousePos.y * 0.12
       }}
-      transition={{ type: "spring", stiffness: 30, damping: 30 }}
+      transition={isMobile ? { duration: 0 } : { type: "spring", stiffness: 30, damping: 30 }}
       className="absolute inset-0 z-0 pointer-events-none"
     >
       {/* Film Grain Texture */}
       <div
-        className="absolute inset-0 opacity-[0.012] mix-blend-overlay pointer-events-none"
+        className="hidden sm:block absolute inset-0 opacity-[0.012] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }}
       />
 
-      <div className="absolute inset-0 animate-[starDrift_28s_linear_infinite] opacity-55 pointer-events-none">
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-55 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <g fill="#ffffff">
             <circle cx="7%" cy="10%" r="0.9" opacity="0.6" />
@@ -68,20 +70,20 @@ const EarthCinematicBackground = ({ mousePos }: EarthCinematicBackgroundProps) =
       </div>
     </motion.div>
 
-    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET (Scaled down 12% to feel more distant, nudged 2-3% lower) */}
+    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET (Static on Mobile) */}
     <motion.div
-      animate={{
+      animate={isMobile ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.2,
         y: mousePos.y * 0.08
       }}
-      transition={{ type: "spring", stiffness: 35, damping: 30 }}
-      className="absolute top-[8%] sm:top-[5%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden"
+      transition={isMobile ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
+      className="absolute top-[8%] sm:top-[5%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/earth_command_center_bg.png"
+        src="/images/earth_command_center_bg.webp"
         alt="Digital Earth Command Center"
-        className="w-full h-full object-cover object-[center_18%] opacity-65 brightness-[0.65] contrast-[1.1] scale-[1.02] mix-blend-screen pointer-events-none select-none [mask-image:linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,1)_10%,rgba(0,0,0,1)_85%,transparent_100%)]"
+        className="w-full h-full object-cover object-[center_18%] opacity-65 brightness-[0.75] sm:brightness-[0.65] contrast-[1.05] sm:contrast-[1.1] scale-[1.02] sm:mix-blend-screen pointer-events-none select-none sm:[mask-image:linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,1)_10%,rgba(0,0,0,1)_85%,transparent_100%)] transform-gpu"
       />
     </motion.div>
 
@@ -142,46 +144,47 @@ const EarthCinematicBackground = ({ mousePos }: EarthCinematicBackgroundProps) =
       </svg>
     </div>
 
-    {/* 7. VOLUMETRIC ATMOSPHERIC ILLUMINATION (Increased 15% for stronger atmospheric rim glow) */}
+    {/* 7. VOLUMETRIC ATMOSPHERIC ILLUMINATION */}
     <motion.div
-      animate={{
+      animate={isMobile ? { scale: 1, opacity: 0.9, x: 0, y: 0 } : {
         scale: [1, 1.03, 1],
         opacity: [0.9, 1, 0.9],
         x: mousePos.x * 0.25,
         y: mousePos.y * 0.25
       }}
-      transition={{
+      transition={isMobile ? { duration: 0 } : {
         scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
         opacity: { duration: 8, repeat: Infinity, ease: "easeInOut" },
         x: { type: "spring", stiffness: 40, damping: 30 },
         y: { type: "spring", stiffness: 40, damping: 30 }
       }}
-      className="absolute top-[34%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[600px] sm:w-[1000px] sm:h-[750px] rounded-full pointer-events-none z-15"
+      className="absolute top-[34%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[300px] sm:w-[1000px] sm:h-[750px] rounded-full pointer-events-none z-15"
     >
-      <div className="w-full h-full rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.28)_0%,rgba(0,180,216,0.09)_45%,transparent_75%)] blur-[110px]" />
+      <div className="w-full h-full rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.28)_0%,rgba(0,180,216,0.09)_45%,transparent_75%)] blur-[40px] sm:blur-[110px]" />
     </motion.div>
 
-    {/* 8. ENGINEERING CAD GRID (Dissolving into Atmosphere) */}
+    {/* 8. ENGINEERING CAD GRID */}
     <motion.div
-      animate={{
+      animate={isMobile ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.18,
         y: mousePos.y * 0.18
       }}
-      transition={{ type: "spring", stiffness: 40, damping: 30 }}
+      transition={isMobile ? { duration: 0 } : { type: "spring", stiffness: 40, damping: 30 }}
       className="absolute inset-0 z-20 pointer-events-none"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-20 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.2)_40%,transparent_65%)]" />
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-[#00E5FF]/[0.04]" />
       <div className="absolute top-0 left-1/2 w-[1px] h-full bg-[#00E5FF]/[0.04]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(56,189,248,0.02)_50%,transparent_100%)] h-[220px] animate-[scanline_14s_ease-in-out_infinite]" />
+      <div className="hidden sm:block absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(56,189,248,0.02)_50%,transparent_100%)] h-[220px] animate-[scanline_14s_ease-in-out_infinite]" />
     </motion.div>
 
-    {/* 9. VIGNETTE OVERLAY (Focuses eye on Name -> Portrait -> Cards) */}
+    {/* 9. VIGNETTE OVERLAY */}
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#010309_100%)] z-30 pointer-events-none" />
   </div>
 );
 
 export default function HeroReveal() {
+  const isMobile = useIsMobile();
   const [roleIndex, setRoleIndex] = useState(0);
 
   // Mouse Parallax for Portrait, Earth & Camera Drift
@@ -195,6 +198,8 @@ export default function HeroReveal() {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
         x: (e.clientX / window.innerWidth - 0.5) * 8, // Max 4px drift in either direction
@@ -203,7 +208,7 @@ export default function HeroReveal() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMobile]);
 
   return (
     <motion.div 
@@ -212,12 +217,12 @@ export default function HeroReveal() {
       transition={{ duration: 1.2, ease: "easeInOut" }}
       className="relative z-20 flex flex-col items-center justify-start w-full min-h-screen pt-24 pb-10 overflow-hidden"
     >
-      <EarthCinematicBackground mousePos={mousePos} />
+      <EarthCinematicBackground mousePos={mousePos} isMobile={isMobile} />
       <HeroHUD />
       
       <motion.div 
-        animate={{ x: mousePos.x * 0.2, y: mousePos.y * 0.2 }}
-        transition={{ type: "spring", stiffness: 50, damping: 30 }}
+        animate={isMobile ? { x: 0, y: 0 } : { x: mousePos.x * 0.2, y: mousePos.y * 0.2 }}
+        transition={isMobile ? { duration: 0 } : { type: "spring", stiffness: 50, damping: 30 }}
         className="flex flex-col items-center w-full max-w-7xl mx-auto px-4 z-20 pointer-events-none"
       >
         {/* Top Header Tag matching reference image */}
@@ -271,7 +276,7 @@ export default function HeroReveal() {
         </motion.p>
       </motion.div>
 
-      {/* Portrait Container: Centered with Soft Environmental Backlight from Earth Horizon */}
+      {/* Portrait Container */}
       <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-12 sm:-mt-16 md:-mt-20 z-10 pointer-events-none">
         
         {/* Soft Cyan Volumetric Light emanating upward from Earth Horizon behind Portrait Cutout */}
@@ -279,13 +284,13 @@ export default function HeroReveal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.2 }}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[420px] h-[360px] sm:w-[680px] sm:h-[500px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/20 via-[#00E5FF]/08 to-transparent blur-[85px] pointer-events-none"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[250px] sm:w-[680px] sm:h-[500px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/20 via-[#00E5FF]/08 to-transparent blur-[35px] sm:blur-[85px] pointer-events-none"
         />
 
         {/* The Portrait */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
-          animate={{ 
+          animate={isMobile ? { opacity: 1, y: 0, x: 0 } : { 
             opacity: 1, 
             y: 0,
             x: mousePos.x,
@@ -295,16 +300,15 @@ export default function HeroReveal() {
             y: { duration: 1.2, delay: 0.2, ease: "easeOut" },
             x: { type: "spring", stiffness: 40, damping: 30 }
           }}
-          // Breathing animation: 1px over 8 seconds
-          className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] z-10 animate-[breath_8s_ease-in-out_infinite]"
+          className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] z-10 sm:animate-[breath_8s_ease-in-out_infinite]"
         >
           {/* Subtle cyan rim light and soft shadow via drop-shadow */}
           <div className="absolute inset-0 w-full h-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)] drop-shadow-[0_0_15px_rgba(0,229,255,0.25)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src="/profile_cutout_clean.png" 
+              src="/profile_cutout_clean.webp" 
               alt="Prajval Mahadev Injar"
-              className="w-full h-full object-contain object-bottom pointer-events-auto mix-blend-normal"
+              className="w-full h-full object-contain object-bottom pointer-events-auto mix-blend-normal transform-gpu"
             />
           </div>
         </motion.div>
@@ -356,3 +360,4 @@ export default function HeroReveal() {
     </motion.div>
   );
 }
+
