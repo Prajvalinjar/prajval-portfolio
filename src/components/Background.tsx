@@ -1,26 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { motion } from "framer-motion";
 
 export default function Background() {
-  const pulseRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!pulseRef.current) return;
-    
-    // Occasional soft distant cyan pulse
-    gsap.to(pulseRef.current, {
-      opacity: 0.1,
-      scale: 1.5,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      repeatDelay: Math.random() * 5 + 5,
-    });
-  }, []);
-
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
       {/* Ultra subtle blueprint grid */}
@@ -30,8 +12,9 @@ export default function Background() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] opacity-10 pointer-events-none mix-blend-overlay" />
       
       {/* Distant cyan pulse */}
-      <div 
-        ref={pulseRef}
+      <motion.div 
+        animate={{ opacity: [0, 0.1, 0], scale: [1, 1.5, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-accent/20 rounded-full blur-[120px] opacity-0 pointer-events-none transform -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
       />
 
