@@ -28,8 +28,8 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
     <div className="absolute inset-0 bg-[#010309]" />
 
     {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
-    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] opacity-35 sm:opacity-45 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
-    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] opacity-35 sm:opacity-45 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-22 sm:opacity-30 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-22 sm:opacity-30 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
 
     {/* 3. MULTI-SCALE DRIFTING STARFIELD */}
     <motion.div
@@ -48,7 +48,7 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
         />
       )}
 
-      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-55 pointer-events-none">
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-35 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <g fill="#ffffff">
             <circle cx="7%" cy="10%" r="0.9" opacity="0.6" />
@@ -82,7 +82,7 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
         y: mousePos.y * 0.08
       }}
       transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
-      className="absolute top-[8%] sm:top-[5%] lg:top-[12%] xl:top-[14%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
+      className="absolute top-[10%] sm:top-[8%] lg:top-[14%] xl:top-[16%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
     >
       <div className="relative w-full h-full flex items-start justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -91,11 +91,11 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
           alt="Earth Command Center Horizon"
           decoding="async"
           fetchPriority="high"
-          className="w-full h-auto object-cover object-top opacity-95 pointer-events-none select-none drop-shadow-[0_0_80px_rgba(0,229,255,0.28)]"
+          className="w-full h-auto object-cover object-top opacity-82 brightness-[0.74] contrast-[0.92] pointer-events-none select-none drop-shadow-[0_0_35px_rgba(0,229,255,0.12)]"
         />
 
         {/* Dynamic Atmosphere Rim Glow */}
-        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/25 via-[#3B82F6]/10 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-80 pointer-events-none mix-blend-screen" />
+        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/14 via-[#3B82F6]/05 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-40 pointer-events-none mix-blend-screen" />
       </div>
     </motion.div>
   </div>
@@ -260,12 +260,12 @@ export const DesktopHero: React.FC = memo(() => {
         </motion.div>
       </div>
 
-      {/* Experience Cards */}
+      {/* Experience Cards (Expanded max-width +5% for wider premium desktop presence) */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-6xl px-6 -mt-10 sm:-mt-14 md:-mt-16 z-20 relative pointer-events-auto"
+        className="w-full max-w-[1240px] px-6 -mt-10 sm:-mt-14 md:-mt-16 z-20 relative pointer-events-auto"
       >
         <InteractiveCards />
       </motion.div>
