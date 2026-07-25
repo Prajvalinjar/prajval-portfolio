@@ -33,7 +33,7 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
             handleClick();
           }
         }}
-        className="w-full min-h-[96px] p-4 rounded-xl bg-[#080E1A]/85 border border-white/10 hover:border-[#00E5FF]/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#00E5FF]"
+        className="w-full min-h-[86px] p-3.5 sm:p-4 rounded-xl bg-[#080E1A]/85 border border-white/10 hover:border-[#00E5FF]/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#00E5FF]"
       >
         {/* Accent Top Line */}
         <div
@@ -44,7 +44,7 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
         <div className="flex items-center justify-between gap-3 w-full">
           <div className="flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 shrink-0"
+              className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 shrink-0"
               style={{ background: "rgba(255,255,255,0.03)", color: accentColor }}
             >
               {icon}
@@ -59,10 +59,10 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
             </div>
           </div>
 
-          <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-secondary/60 shrink-0">
+          <div className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-secondary/60 shrink-0">
             <svg
-              width="14"
-              height="14"
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -76,7 +76,7 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
           </div>
         </div>
 
-        <p className="text-[11px] text-secondary/70 mt-2 line-clamp-1 font-normal">
+        <p className="text-[11px] text-secondary/70 mt-1.5 line-clamp-1 font-normal">
           {subtitle}
         </p>
       </div>
@@ -87,7 +87,7 @@ MobileCardItem.displayName = "MobileCardItem";
 
 export const MobileCards: React.FC = React.memo(() => {
   return (
-    <div className="flex flex-col gap-3.5 w-full max-w-md mx-auto px-4 z-20 relative">
+    <div className="flex flex-col gap-3 w-full max-w-md mx-auto px-4 z-20 relative">
       <MobileCardItem
         systemId="[01] JOURNEY.LOG"
         title="Explore My Journey"
