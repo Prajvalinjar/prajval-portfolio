@@ -156,7 +156,7 @@ export const DesktopHero: React.FC = memo(() => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.0, ease: "easeOut" }}
-      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-24 sm:pt-28 md:pt-32 lg:pt-20 xl:pt-22 pb-8 lg:pb-6 overflow-hidden select-none"
+      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-16 sm:pt-20 md:pt-22 pb-4 overflow-hidden select-none"
     >
       {/* 1. CINEMATIC EARTH COMMAND CENTER BACKGROUND */}
       <EarthCinematicBackground 
@@ -219,7 +219,7 @@ export const DesktopHero: React.FC = memo(() => {
       </motion.div>
 
       {/* Portrait Container */}
-      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-16 sm:-mt-22 md:-mt-26 z-10 pointer-events-none">
+      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-20 sm:-mt-26 md:-mt-28 z-10 pointer-events-none">
         
         {/* Soft Cyan Volumetric Light emanating upward */}
         {perf.enableVolumetricGlow && (
@@ -265,7 +265,7 @@ export const DesktopHero: React.FC = memo(() => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-6xl px-6 -mt-12 sm:-mt-16 md:-mt-18 lg:-mt-24 xl:-mt-28 z-20 relative pointer-events-auto"
+        className="w-full max-w-6xl px-6 -mt-10 sm:-mt-14 md:-mt-16 z-20 relative pointer-events-auto"
       >
         <InteractiveCards />
       </motion.div>
@@ -285,7 +285,7 @@ export const DesktopHero: React.FC = memo(() => {
             handleScrollToJourney();
           }
         }}
-        className="mt-16 mb-8 lg:mt-10 lg:mb-4 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
+        className="mt-12 mb-4 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
       >
         <span className="text-[10px] font-mono tracking-widest text-secondary/60 group-hover:text-white transition-colors uppercase">
           Explore My Story <span className="opacity-50 group-hover:translate-y-1 inline-block transition-transform">↓</span>
