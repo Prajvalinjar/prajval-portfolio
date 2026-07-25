@@ -8,10 +8,10 @@ import HeroBackground from "./HeroBackground";
 import { usePerformanceTier } from "@/hooks/usePerformanceTier";
 
 const ROLES = [
-  "Data Analyst",
-  "Full Stack Developer",
+  "Problem Solver",
   "AI Enthusiast",
-  "Problem Solver"
+  "Full Stack Developer",
+  "Data Analyst"
 ];
 
 export const MobileHero: React.FC = React.memo(() => {
@@ -34,7 +34,7 @@ export const MobileHero: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-between pt-16 pb-6 overflow-hidden select-none">
+    <div className="relative w-full min-h-screen flex flex-col items-center justify-between pt-20 sm:pt-24 pb-6 overflow-hidden select-none">
       {/* Shared Background Engine with Earth offset 90px lower on mobile */}
       <HeroBackground
         mousePos={{ x: 0, y: 0 }}
@@ -48,25 +48,25 @@ export const MobileHero: React.FC = React.memo(() => {
       <MobileNavigation />
 
       {/* Mobile Storytelling Header Composition */}
-      <div className="relative z-20 flex flex-col items-center text-center max-w-sm px-4 pt-2">
-        {/* 1. Engineer Mode Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1A]/90 border border-[#00E5FF]/40 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-2.5 shadow-sm backdrop-blur-md">
+      <div className="relative z-20 flex flex-col items-center text-center max-w-sm px-4 pt-4">
+        {/* 1. Hero Badge (28px breathing room below fixed nav bar) */}
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1A]/90 border border-[#00E5FF]/40 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-6 shadow-sm backdrop-blur-md">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-ping" />
           <span className="font-semibold">ENGINEERING PORTFOLIO</span>
         </div>
 
-        {/* 2. Name */}
-        <h1 className="text-xl sm:text-2xl font-heading font-extrabold text-white tracking-tight uppercase leading-tight mb-1">
-          Prajval Mahadev Injar
+        {/* 2. Hero Message (Primary Focal Point - Largest) */}
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight leading-[1.15] mb-4 uppercase drop-shadow-md">
+          Building <span className="bg-gradient-to-r from-white via-cyan-200 to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span> Products
         </h1>
 
-        {/* 3. Title (Max 2 lines) */}
-        <h2 className="text-lg sm:text-xl font-heading font-bold text-white tracking-tight uppercase leading-tight mb-1.5">
-          Building <span className="bg-gradient-to-r from-white via-cyan-200 to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span> Products
+        {/* 3. Name (Second Largest) */}
+        <h2 className="text-sm sm:text-base font-mono font-semibold text-[#00E5FF] tracking-widest uppercase mb-4">
+          Prajval Mahadev Injar
         </h2>
 
-        {/* 4. Professional Title Rotator */}
-        <div className="h-6 flex items-center justify-center relative w-full mb-2">
+        {/* 4. Professional Title Rotator (Accent) */}
+        <div className="h-6 flex items-center justify-center relative w-full mb-5">
           <AnimatePresence mode="wait">
             <motion.span
               key={roleIndex}
@@ -74,15 +74,15 @@ export const MobileHero: React.FC = React.memo(() => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.5 }}
-              className="absolute text-xs sm:text-sm font-mono text-[#00E5FF] font-semibold tracking-wider text-center uppercase"
+              className="absolute text-xs sm:text-sm font-mono text-[#00E5FF]/90 font-medium tracking-wider text-center uppercase"
             >
               {ROLES[roleIndex]}
             </motion.span>
           </AnimatePresence>
         </div>
 
-        {/* 5. Short Description */}
-        <p className="text-center text-xs text-secondary/85 max-w-xs mx-auto leading-relaxed mb-3 font-normal px-2">
+        {/* 5. Tagline Description (Smallest) */}
+        <p className="text-center text-xs text-secondary/80 max-w-xs mx-auto leading-relaxed mb-8 font-normal px-2">
           Building intelligent products through <span className="text-[#00E5FF]">data</span>,{" "}
           <span className="text-[#00E5FF]">engineering</span>, <span className="text-[#00E5FF]">AI</span>, and thoughtful <span className="text-[#00E5FF]">design</span>.
         </p>
@@ -105,7 +105,7 @@ export const MobileHero: React.FC = React.memo(() => {
       </div>
 
       {/* 7. Mobile Cards (Compact, touch-optimized card stack) */}
-      <div className="w-full max-w-sm px-3 z-20 relative -mt-4">
+      <div className="w-full max-w-sm px-3 z-20 relative -mt-2">
         <MobileCards />
       </div>
 

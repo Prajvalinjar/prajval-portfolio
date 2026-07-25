@@ -9,7 +9,7 @@ export const MobileNavigation: React.FC = React.memo(() => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[120] px-4 py-3 bg-[#030509]/80 backdrop-blur-md border-b border-white/10 flex items-center justify-between pointer-events-auto">
+      <header className="fixed top-0 left-0 right-0 z-[120] px-4 py-2.5 bg-[#030509]/85 backdrop-blur-md border-b border-white/10 flex items-center justify-between pointer-events-auto">
         {/* Brand */}
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
@@ -26,13 +26,13 @@ export const MobileNavigation: React.FC = React.memo(() => {
           <span>ENGINEER MODE</span>
         </div>
 
-        {/* Hamburger Menu Button (48px touch target) */}
+        {/* Hamburger Menu Button (10% smaller visual size with 44px touch target) */}
         <button
           onClick={() => setDrawerOpen(true)}
           aria-label="Open mobile navigation menu"
-          className="w-12 h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
+          className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer touch-manipulation"
         >
-          <Menu className="w-5 h-5 text-[#00E5FF]" />
+          <Menu className="w-4 h-4 text-[#00E5FF]" />
         </button>
       </header>
 
