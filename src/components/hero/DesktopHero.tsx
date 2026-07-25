@@ -8,9 +8,9 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePerformanceTier } from "@/hooks/usePerformanceTier";
 
 const ROLES = [
-  "Data Analyst",
-  "Full Stack Developer",
   "AI Enthusiast",
+  "Full Stack Developer",
+  "Data Analyst",
   "Problem Solver",
   "Building Intelligent Products"
 ];
@@ -28,8 +28,8 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
     <div className="absolute inset-0 bg-[#010309]" />
 
     {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
-    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-22 sm:opacity-30 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
-    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-22 sm:opacity-30 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,rgba(56,189,248,0.10)_40%,transparent_75%)] opacity-40 sm:opacity-50 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,rgba(56,189,248,0.10)_40%,transparent_75%)] opacity-40 sm:opacity-50 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
 
     {/* 3. MULTI-SCALE DRIFTING STARFIELD */}
     <motion.div
@@ -48,7 +48,7 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
         />
       )}
 
-      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-35 pointer-events-none">
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-60 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <g fill="#ffffff">
             <circle cx="7%" cy="10%" r="0.9" opacity="0.6" />
@@ -75,14 +75,14 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
       </div>
     </motion.div>
 
-    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET */}
+    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET (Positioned behind portrait shoulders) */}
     <motion.div
       animate={isMobile || !enableMotion ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.2,
         y: mousePos.y * 0.08
       }}
       transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
-      className="absolute top-[10%] sm:top-[8%] lg:top-[14%] xl:top-[16%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
+      className="absolute top-[6%] sm:top-[4%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
     >
       <div className="relative w-full h-full flex items-start justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -91,13 +91,16 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
           alt="Earth Command Center Horizon"
           decoding="async"
           fetchPriority="high"
-          className="w-full h-auto object-cover object-top opacity-82 brightness-[0.74] contrast-[0.92] pointer-events-none select-none drop-shadow-[0_0_35px_rgba(0,229,255,0.12)]"
+          className="w-full h-auto object-cover object-top opacity-95 pointer-events-none select-none drop-shadow-[0_0_80px_rgba(0,229,255,0.28)]"
         />
 
         {/* Dynamic Atmosphere Rim Glow */}
-        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/14 via-[#3B82F6]/05 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-40 pointer-events-none mix-blend-screen" />
+        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/25 via-[#3B82F6]/10 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-80 pointer-events-none mix-blend-screen" />
       </div>
     </motion.div>
+
+    {/* 5. VIGNETTE OVERLAY */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#010309_100%)] z-30 pointer-events-none" />
   </div>
 ));
 EarthCinematicBackground.displayName = "EarthCinematicBackground";
@@ -112,11 +115,11 @@ export const DesktopHero: React.FC = memo(() => {
   useEffect(() => {
     const interval = setInterval(() => {
       setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }, 3800);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
-  // Mouse Parallax listener with requestAnimationFrame throttling
+  // Mouse Parallax listener
   useEffect(() => {
     if (isMobile || perf.tier === "LOW") return;
 
@@ -155,8 +158,8 @@ export const DesktopHero: React.FC = memo(() => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1.0, ease: "easeOut" }}
-      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-16 sm:pt-20 md:pt-22 pb-4 overflow-hidden select-none"
+      transition={{ duration: 1.2, ease: "easeInOut" }}
+      className="relative z-20 flex flex-col items-center justify-start w-full min-h-screen pt-24 pb-10 overflow-hidden select-none"
     >
       {/* 1. CINEMATIC EARTH COMMAND CENTER BACKGROUND */}
       <EarthCinematicBackground 
@@ -171,23 +174,31 @@ export const DesktopHero: React.FC = memo(() => {
 
       {/* MAIN HERO CONTENT HEADER */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 sm:px-6"
+        animate={{ x: mousePos.x * 0.2, y: mousePos.y * 0.2 }}
+        transition={{ type: "spring", stiffness: 50, damping: 30 }}
+        className="flex flex-col items-center w-full max-w-7xl mx-auto px-4 z-20 pointer-events-none"
       >
-        {/* Futuristic Status Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#080E1A]/80 border border-[#00E5FF]/30 text-[#00E5FF] text-[11px] sm:text-xs font-mono tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(0,229,255,0.15)] backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-ping" />
-          <span className="font-semibold">Prajval Mahadev Injar</span>
-          <span className="text-white/40">•</span>
-          <span className="text-secondary/80 font-normal">ENGINEERING PORTFOLIO</span>
-        </div>
+        {/* Top Header Tag: WELCOME TO MY UNIVERSE */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex items-center gap-3 text-[10px] sm:text-xs font-mono tracking-[0.25em] text-[#00E5FF] uppercase mb-2"
+        >
+          <span className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#00E5FF]" />
+          <span>WELCOME TO MY UNIVERSE</span>
+          <span className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#00E5FF]" />
+        </motion.div>
 
-        {/* Main Hero Title */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1] mb-3 uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">
-          Building <span className="bg-gradient-to-r from-white via-cyan-200 to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span> Products
-        </h1>
+        {/* Title: Prajval Mahadev Injar */}
+        <motion.h1 
+          initial={{ opacity: 0, filter: "blur(6px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 1, 0.5, 1] }} 
+          className="text-[38px] sm:text-[60px] md:text-[74px] lg:text-[86px] font-heading font-[800] text-white tracking-tight mb-3 text-center leading-[1.05] drop-shadow-xl"
+        >
+          Prajval Mahadev Injar
+        </motion.h1>
 
         {/* Roles Rotator */}
         <div className="h-8 sm:h-10 flex items-center justify-center relative w-full mb-2">
@@ -198,9 +209,12 @@ export const DesktopHero: React.FC = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="absolute text-base sm:text-xl md:text-2xl font-mono text-[#00E5FF] font-semibold tracking-wider text-center drop-shadow-[0_0_8px_rgba(0,229,255,0.4)] uppercase"
+              className="absolute text-base sm:text-xl md:text-2xl font-mono text-[#00E5FF] font-semibold tracking-wider text-center drop-shadow-[0_0_8px_rgba(0,229,255,0.4)] uppercase flex items-center gap-2"
             >
-              {ROLES[roleIndex]}
+              <span className="w-2.5 h-2.5 rounded-full border border-[#00E5FF] bg-[#00E5FF]/20 flex items-center justify-center">
+                <span className="w-1 h-1 rounded-full bg-[#00E5FF]" />
+              </span>
+              <span>{ROLES[roleIndex]}</span>
             </motion.h2>
           </AnimatePresence>
         </div>
@@ -219,7 +233,7 @@ export const DesktopHero: React.FC = memo(() => {
       </motion.div>
 
       {/* Portrait Container */}
-      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-20 sm:-mt-26 md:-mt-28 z-10 pointer-events-none">
+      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-12 sm:-mt-16 md:-mt-20 z-10 pointer-events-none">
         
         {/* Soft Cyan Volumetric Light emanating upward */}
         {perf.enableVolumetricGlow && (
@@ -260,12 +274,12 @@ export const DesktopHero: React.FC = memo(() => {
         </motion.div>
       </div>
 
-      {/* Experience Cards (Expanded max-width +5% for wider premium desktop presence) */}
+      {/* Experience Cards */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-[1240px] px-6 -mt-10 sm:-mt-14 md:-mt-16 z-20 relative pointer-events-auto"
+        className="w-full max-w-6xl px-6 -mt-16 sm:-mt-24 md:-mt-28 z-20 relative pointer-events-auto"
       >
         <InteractiveCards />
       </motion.div>
@@ -285,7 +299,7 @@ export const DesktopHero: React.FC = memo(() => {
             handleScrollToJourney();
           }
         }}
-        className="mt-12 mb-4 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
+        className="mt-16 mb-8 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
       >
         <span className="text-[10px] font-mono tracking-widest text-secondary/60 group-hover:text-white transition-colors uppercase">
           Explore My Story <span className="opacity-50 group-hover:translate-y-1 inline-block transition-transform">↓</span>
