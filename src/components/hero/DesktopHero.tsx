@@ -233,7 +233,7 @@ export const DesktopHero: React.FC = memo(() => {
       </motion.div>
 
       {/* Portrait Container */}
-      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-12 sm:-mt-16 md:-mt-20 z-10 pointer-events-none">
+      <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-22 sm:-mt-30 md:-mt-34 z-10 pointer-events-none">
         
         {/* Soft Cyan Volumetric Light emanating upward */}
         {perf.enableVolumetricGlow && (
