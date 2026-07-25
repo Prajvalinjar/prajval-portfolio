@@ -7,17 +7,10 @@ export function useIsMobile() {
 
   useEffect(() => {
     const checkMobile = () => {
-      const isTouch =
-        typeof window !== "undefined" &&
-        (window.matchMedia("(pointer: coarse)").matches ||
-          "ontouchstart" in window ||
-          navigator.maxTouchPoints > 0);
+      // Mobile is strictly defined by viewport width under 768px.
+      // Touchscreen laptops & high-res tablets in landscape (>=768px) must always render Desktop view.
       const isSmall = typeof window !== "undefined" && window.innerWidth < 768;
-      const reducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      setIsMobile(isTouch || isSmall || reducedMotion);
+      setIsMobile(isSmall);
     };
 
     checkMobile();
