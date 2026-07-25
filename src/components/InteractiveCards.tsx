@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, memo } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const Noise = () => (
@@ -362,5 +362,5 @@ export function InteractiveCardsComponent() {
 
 }
 
-export default React.memo(InteractiveCardsComponent);
+export default memo(InteractiveCardsComponent);
 

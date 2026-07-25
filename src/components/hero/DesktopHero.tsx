@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveCards from "@/components/InteractiveCards";
 import HeroHUD from "@/components/HeroHUD";
@@ -22,7 +22,7 @@ interface EarthCinematicBackgroundProps {
   enableMotion: boolean;
 }
 
-const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, enableMotion }: EarthCinematicBackgroundProps) => (
+const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableMotion }: EarthCinematicBackgroundProps) => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#010309]">
     {/* 1. DEEP BLACK SPACE BASE LAYER */}
     <div className="absolute inset-0 bg-[#010309]" />
@@ -102,7 +102,7 @@ const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, e
 ));
 EarthCinematicBackground.displayName = "EarthCinematicBackground";
 
-export const DesktopHero: React.FC = React.memo(() => {
+export const DesktopHero: React.FC = memo(() => {
   const isMobile = useIsMobile();
   const perf = usePerformanceTier();
   const [roleIndex, setRoleIndex] = useState(0);
