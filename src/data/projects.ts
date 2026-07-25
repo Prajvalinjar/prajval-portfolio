@@ -31,9 +31,9 @@ export const PROJECTS: Project[] = [
     duration: "8 Weeks",
     startDate: "Mar 2025",
     completionDate: "May 2025",
-    image: "/images/project_resumeiq.png",
+    image: "/images/project_resumeiq.webp",
     screenshots: [
-      "/images/project_resumeiq.png"
+      "/images/project_resumeiq.webp"
     ],
     liveUrl: "https://resumeiq-ai-self.vercel.app",
     githubUrl: "https://github.com/Prajvalinjar/resumeiq-ai",
@@ -145,9 +145,9 @@ export const PROJECTS: Project[] = [
     duration: "12 Weeks",
     startDate: "Aug 2024",
     completionDate: "Nov 2024",
-    image: "/images/project_etongue.jpg",
+    image: "/images/project_etongue.webp",
     screenshots: [
-      "/images/project_etongue.jpg"
+      "/images/project_etongue.webp"
     ],
     liveUrl: "https://e-tongue.vercel.app",
     githubUrl: "https://github.com/Prajvalinjar/e-tongue",

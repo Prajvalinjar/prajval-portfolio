@@ -78,9 +78,9 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     role: "Full Stack Developer / UI-UX Designer / AI Integration",
     platform: "Web Application & Cloud Microservices",
     techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI", "Vercel"],
-    image: "/images/project_resumeiq.png",
+    image: "/images/project_resumeiq.webp",
     screenshots: [
-      "/images/project_resumeiq.png"
+      "/images/project_resumeiq.webp"
     ],
     liveUrl: "https://resumeiq-ai-self.vercel.app",
     githubUrl: "https://github.com/Prajvalinjar/resumeiq-ai",
@@ -299,9 +299,9 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     role: "Hardware & ML Research Engineer",
     platform: "IoT Prototype / Python Interface",
     techStack: ["Python", "OpenCV", "Machine Learning", "IoT", "Embedded System", "MySQL"],
-    image: "/images/project_etongue.jpg",
+    image: "/images/project_etongue.webp",
     screenshots: [
-      "/images/project_etongue.jpg"
+      "/images/project_etongue.webp"
     ],
     liveUrl: "https://e-tongue.vercel.app",
     githubUrl: "https://github.com/Prajvalinjar/e-tongue",

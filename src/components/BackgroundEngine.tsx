@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePerformanceTier } from "@/hooks/usePerformanceTier";
 
 export type SectionMood = "hero" | "journey" | "projects" | "engineering-stack" | "professional-growth" | "ai-assistant" | "contact";
 
@@ -22,7 +23,7 @@ interface MoodConfig {
 const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   hero: {
     name: "hero",
-    accent: "#00E5FF", // Electric Cyan
+    accent: "#00E5FF",
     glowRgb: "0, 229, 255",
     secondaryGlowRgb: "0, 112, 243",
     gradientBg: "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 229, 255, 0.12), rgba(5, 5, 5, 0) 70%)",
@@ -30,7 +31,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   journey: {
     name: "journey",
-    accent: "#00F0CB", // Dark Teal
+    accent: "#00F0CB",
     glowRgb: "0, 240, 203",
     secondaryGlowRgb: "13, 148, 136",
     gradientBg: "radial-gradient(ellipse 70% 60% at 20% 40%, rgba(0, 240, 203, 0.1), rgba(5, 5, 5, 0) 70%)",
@@ -38,7 +39,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   projects: {
     name: "projects",
-    accent: "#3B82F6", // Electric Blue
+    accent: "#3B82F6",
     glowRgb: "59, 130, 246",
     secondaryGlowRgb: "0, 229, 255",
     gradientBg: "radial-gradient(circle 800px at 80% 30%, rgba(59, 130, 246, 0.12), rgba(5, 5, 5, 0) 70%)",
@@ -47,7 +48,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   "engineering-stack": {
     name: "engineering-stack",
-    accent: "#9333EA", // Dark Indigo / Purple
+    accent: "#9333EA",
     glowRgb: "147, 51, 234",
     secondaryGlowRgb: "168, 85, 247",
     gradientBg: "radial-gradient(circle 900px at 50% 50%, rgba(147, 51, 234, 0.1), rgba(5, 5, 5, 0) 70%)",
@@ -56,7 +57,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   "professional-growth": {
     name: "professional-growth",
-    accent: "#10B981", // Dark Emerald
+    accent: "#10B981",
     glowRgb: "16, 185, 129",
     secondaryGlowRgb: "52, 211, 153",
     gradientBg: "radial-gradient(ellipse 70% 50% at 70% 30%, rgba(16, 185, 129, 0.1), rgba(5, 5, 5, 0) 70%)",
@@ -65,7 +66,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   "ai-assistant": {
     name: "ai-assistant",
-    accent: "#8B5CF6", // Dark Violet
+    accent: "#8B5CF6",
     glowRgb: "139, 92, 246",
     secondaryGlowRgb: "0, 229, 255",
     gradientBg: "radial-gradient(circle 700px at 50% 40%, rgba(139, 92, 246, 0.12), rgba(5, 5, 5, 0) 70%)",
@@ -74,7 +75,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
   },
   contact: {
     name: "contact",
-    accent: "#38BDF8", // Blue White
+    accent: "#38BDF8",
     glowRgb: "56, 189, 248",
     secondaryGlowRgb: "0, 229, 255",
     gradientBg: "radial-gradient(circle 600px at 50% 60%, rgba(56, 189, 248, 0.08), rgba(5, 5, 5, 0) 70%)",
@@ -84,6 +85,7 @@ const SECTION_MOODS: Record<SectionMood, MoodConfig> = {
 
 export default function BackgroundEngine() {
   const isMobile = useIsMobile();
+  const perf = usePerformanceTier();
   const [currentSection, setCurrentSection] = useState<SectionMood>("hero");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -125,6 +127,8 @@ export default function BackgroundEngine() {
 
   // Layer 3: Interactive Particle Engine Canvas
   useEffect(() => {
+    if (!perf.enableParticles) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -133,16 +137,22 @@ export default function BackgroundEngine() {
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    let isTabVisible = !document.hidden;
 
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
-    window.addEventListener("resize", handleResize);
+    const handleVisibility = () => {
+      isTabVisible = !document.hidden;
+    };
 
-    // Particle Array - Reduced on mobile to preserve GPU performance
-    const particleCount = isMobile ? 18 : 65;
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    // Particle Array scaled by performance tier
+    const particleCount = perf.particleCount;
     const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -155,11 +165,14 @@ export default function BackgroundEngine() {
     let currentRgb = activeMood.glowRgb;
 
     const render = () => {
-      ctx.clearRect(0, 0, width, height);
+      if (!isTabVisible) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
 
+      ctx.clearRect(0, 0, width, height);
       currentRgb = activeMood.glowRgb;
 
-      // Draw Particles & Connections
       for (let i = 0; i < particleCount; i++) {
         const p = particles[i];
         p.x += p.vx;
@@ -170,14 +183,13 @@ export default function BackgroundEngine() {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        // Draw particle dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${currentRgb}, ${p.alpha * 0.7})`;
         ctx.fill();
 
-        // Connect nearby particles on desktop
-        if (!isMobile) {
+        // Connect nearby particles on high performance desktop
+        if (perf.tier === "HIGH" && !isMobile) {
           for (let j = i + 1; j < particleCount; j++) {
             const p2 = particles[j];
             const dx = p.x - p2.x;
@@ -204,9 +216,12 @@ export default function BackgroundEngine() {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [activeMood.glowRgb, isMobile]);
+  }, [activeMood.glowRgb, isMobile, perf.enableParticles, perf.particleCount, perf.tier]);
+
+  const animateOrbs = !isMobile && perf.tier !== "LOW";
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">
@@ -223,13 +238,13 @@ export default function BackgroundEngine() {
 
       {/* Floating Light Orb 1 (Primary Accent) */}
       <motion.div
-        animate={isMobile ? { x: 0, y: 0, scale: 1 } : {
+        animate={animateOrbs ? {
           x: ["-10%", "10%", "-5%"],
           y: ["-5%", "15%", "0%"],
           scale: [1, 1.2, 1],
-        }}
-        transition={isMobile ? { duration: 0 } : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-1/4 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full blur-[40px] sm:blur-[140px] opacity-15 sm:opacity-25 sm:mix-blend-screen"
+        } : { x: 0, y: 0, scale: 1 }}
+        transition={animateOrbs ? { duration: 18, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+        className="absolute top-1/4 left-1/4 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full blur-[30px] sm:blur-[120px] opacity-15 sm:opacity-25 sm:mix-blend-screen transform-gpu"
         style={{
           background: `radial-gradient(circle, rgba(${activeMood.glowRgb}, 0.5) 0%, rgba(0,0,0,0) 70%)`,
         }}
@@ -237,13 +252,13 @@ export default function BackgroundEngine() {
 
       {/* Floating Light Orb 2 (Secondary Accent) */}
       <motion.div
-        animate={isMobile ? { x: 0, y: 0, scale: 1 } : {
+        animate={animateOrbs ? {
           x: ["10%", "-15%", "5%"],
           y: ["10%", "-10%", "5%"],
           scale: [1.1, 0.9, 1.1],
-        }}
-        transition={isMobile ? { duration: 0 } : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[550px] h-[300px] sm:h-[550px] rounded-full blur-[40px] sm:blur-[150px] opacity-15 sm:opacity-20 sm:mix-blend-screen"
+        } : { x: 0, y: 0, scale: 1 }}
+        transition={animateOrbs ? { duration: 22, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+        className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[550px] h-[300px] sm:h-[550px] rounded-full blur-[30px] sm:blur-[120px] opacity-15 sm:opacity-20 sm:mix-blend-screen transform-gpu"
         style={{
           background: `radial-gradient(circle, rgba(${activeMood.secondaryGlowRgb}, 0.4) 0%, rgba(0,0,0,0) 70%)`,
         }}
@@ -257,7 +272,7 @@ export default function BackgroundEngine() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:80px_80px]" />
 
       {/* LAYER 3: Animated Canvas Floating Particles */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />
+      {perf.enableParticles && <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />}
 
       {/* LAYER 4: Ambient Volumetric Lighting / Spotlight */}
       <div 
@@ -268,9 +283,8 @@ export default function BackgroundEngine() {
       />
 
       {/* LAYER 5: Chapter Specific HUD Features */}
-      {/* 5A: Radar Sweep for Projects Chapter */}
       <AnimatePresence>
-        {activeMood.radarVisible && (
+        {activeMood.radarVisible && perf.tier !== "LOW" && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.15 }}
@@ -283,7 +297,6 @@ export default function BackgroundEngine() {
         )}
       </AnimatePresence>
 
-      {/* 5B: Neural Circuit Mesh for Tech Ecosystem */}
       <AnimatePresence>
         {activeMood.circuitVisible && (
           <motion.div
@@ -295,7 +308,6 @@ export default function BackgroundEngine() {
         )}
       </AnimatePresence>
 
-      {/* 5C: Hologram Rays for Professional Growth */}
       <AnimatePresence>
         {activeMood.hologramVisible && (
           <motion.div
@@ -308,11 +320,15 @@ export default function BackgroundEngine() {
       </AnimatePresence>
 
       {/* LAYER 6: Film Grain & CRT Scanlines */}
-      <div 
-        className="hidden sm:block absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
-        style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: 'repeat' }} 
-      />
-      <div className="hidden sm:block absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none mix-blend-overlay" />
+      {perf.enableGrainOverlay && (
+        <>
+          <div 
+            className="hidden sm:block absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
+            style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: 'repeat' }} 
+          />
+          <div className="hidden sm:block absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none mix-blend-overlay" />
+        </>
+      )}
 
       {/* LAYER 7: Soft Futuristic Vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#030509_90%)] pointer-events-none opacity-90" />

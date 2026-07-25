@@ -46,7 +46,7 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     ],
     images: [
       {
-        url: "/images/journey_2023.jpg",
+        url: "/images/journey_2023.webp",
         caption: "DYPSEM Engineering Campus & Academic Department",
         alt: "DYPSEM Campus",
         category: "Campus"
@@ -93,7 +93,7 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     ],
     images: [
       {
-        url: "/images/journey_2024.jpg",
+        url: "/images/journey_2024.webp",
         caption: "Data Analytics Dashboard & Python EDA Workbench",
         alt: "Data Analytics Workbench",
         category: "Project"
@@ -141,7 +141,7 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     ],
     images: [
       {
-        url: "/images/journey_2025.png",
+        url: "/images/journey_2025.webp",
         caption: "Virtual Internship Certificates & GDSC AI Workshops",
         alt: "Virtual Internships Certificate",
         category: "Certificate"
@@ -190,7 +190,7 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     ],
     images: [
       {
-        url: "/images/journey_2026.jpg",
+        url: "/images/journey_2026.webp",
         caption: "National Hackathon Organization & AWS Builder Group Event",
         alt: "Hackathon Organization Event",
         category: "Event"
@@ -240,7 +240,7 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     ],
     images: [
       {
-        url: "/images/journey_today.png",
+        url: "/images/journey_today.webp",
         caption: "Modern Engineering Dashboard & AI Product Suite",
         alt: "Modern AI Products",
         category: "Project"

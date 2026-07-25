@@ -2,22 +2,44 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import BootSequence from "@/components/BootSequence";
 import BackgroundEngine from "@/components/BackgroundEngine";
 import CustomCursor from "@/components/CustomCursor";
 import HeroReveal from "@/components/HeroReveal";
 import AIAssistant from "@/components/AIAssistant";
-import JourneyChapter from "@/components/journey/JourneyChapter";
-import ProjectsChapter from "@/components/projects/ProjectsChapter";
 import LeftNavigation from "@/components/journey/LeftNavigation";
-import EngineeringStackChapter from "@/components/stack/EngineeringStackChapter";
-import ExperienceChapter from "@/components/experience/ExperienceChapter";
-import AiAssistantChapter from "@/components/ai-assistant/AiAssistantChapter";
-import ContactChapter from "@/components/contact/ContactChapter";
 import { useTransition } from "@/components/TransitionProvider";
-
 import { ToastProvider } from "@/components/ToastContext";
+import { AdaptivePerformanceProvider } from "@/context/PerformanceContext";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+
+// Lightweight Skeleton Fallback Component
+const SectionSkeleton = () => (
+  <div className="w-full min-h-[300px] rounded-2xl bg-[#080E1A]/40 border border-white/5 animate-pulse flex items-center justify-center">
+    <div className="w-8 h-8 rounded-full border-2 border-[#00E5FF]/30 border-t-[#00E5FF] animate-spin" />
+  </div>
+);
+
+// Below-The-Fold Chapters (Dynamically Loaded for Max Bundle Reduction)
+const JourneyChapter = dynamic(() => import("@/components/journey/JourneyChapter"), {
+  loading: SectionSkeleton,
+});
+const ProjectsChapter = dynamic(() => import("@/components/projects/ProjectsChapter"), {
+  loading: SectionSkeleton,
+});
+const EngineeringStackChapter = dynamic(() => import("@/components/stack/EngineeringStackChapter"), {
+  loading: SectionSkeleton,
+});
+const ExperienceChapter = dynamic(() => import("@/components/experience/ExperienceChapter"), {
+  loading: SectionSkeleton,
+});
+const AiAssistantChapter = dynamic(() => import("@/components/ai-assistant/AiAssistantChapter"), {
+  loading: SectionSkeleton,
+});
+const ContactChapter = dynamic(() => import("@/components/contact/ContactChapter"), {
+  loading: SectionSkeleton,
+});
 
 function PortfolioApp() {
   const { hasBooted } = useTransition();
@@ -190,9 +212,10 @@ function PortfolioApp() {
 
 export default function Home() {
   return (
-    <ToastProvider>
-      <PortfolioApp />
-    </ToastProvider>
+    <AdaptivePerformanceProvider>
+      <ToastProvider>
+        <PortfolioApp />
+      </ToastProvider>
+    </AdaptivePerformanceProvider>
   );
 }
-
