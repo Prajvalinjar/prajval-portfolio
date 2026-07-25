@@ -28,8 +28,8 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
     <div className="absolute inset-0 bg-[#010309]" />
 
     {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
-    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,rgba(56,189,248,0.10)_40%,transparent_75%)] opacity-40 sm:opacity-50 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
-    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,rgba(56,189,248,0.10)_40%,transparent_75%)] opacity-40 sm:opacity-50 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.08)_0%,rgba(56,189,248,0.05)_40%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
 
     {/* 3. MULTI-SCALE DRIFTING STARFIELD */}
     <motion.div
@@ -48,28 +48,28 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
         />
       )}
 
-      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-60 pointer-events-none">
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-38 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <g fill="#ffffff">
-            <circle cx="7%" cy="10%" r="0.9" opacity="0.6" />
-            <circle cx="20%" cy="6%" r="1.3" opacity="0.7" />
-            <circle cx="36%" cy="16%" r="0.7" opacity="0.35" />
-            <circle cx="53%" cy="4%" r="1.1" opacity="0.65" />
-            <circle cx="70%" cy="10%" r="1.4" opacity="0.7" />
-            <circle cx="86%" cy="16%" r="1" opacity="0.6" />
-            <circle cx="94%" cy="6%" r="1.2" opacity="0.5" />
-            <circle cx="11%" cy="30%" r="0.8" opacity="0.35" />
-            <circle cx="28%" cy="36%" r="1" opacity="0.45" />
-            <circle cx="66%" cy="26%" r="1.2" opacity="0.5" />
-            <circle cx="90%" cy="36%" r="0.9" opacity="0.45" />
-            <circle cx="4%" cy="56%" r="1.1" opacity="0.3" />
-            <circle cx="23%" cy="50%" r="0.7" opacity="0.25" />
-            <circle cx="80%" cy="52%" r="1" opacity="0.3" />
+            <circle cx="7%" cy="10%" r="0.9" opacity="0.4" />
+            <circle cx="20%" cy="6%" r="1.3" opacity="0.45" />
+            <circle cx="36%" cy="16%" r="0.7" opacity="0.25" />
+            <circle cx="53%" cy="4%" r="1.1" opacity="0.4" />
+            <circle cx="70%" cy="10%" r="1.4" opacity="0.45" />
+            <circle cx="86%" cy="16%" r="1" opacity="0.4" />
+            <circle cx="94%" cy="6%" r="1.2" opacity="0.32" />
+            <circle cx="11%" cy="30%" r="0.8" opacity="0.25" />
+            <circle cx="28%" cy="36%" r="1" opacity="0.3" />
+            <circle cx="66%" cy="26%" r="1.2" opacity="0.32" />
+            <circle cx="90%" cy="36%" r="0.9" opacity="0.3" />
+            <circle cx="4%" cy="56%" r="1.1" opacity="0.2" />
+            <circle cx="23%" cy="50%" r="0.7" opacity="0.18" />
+            <circle cx="80%" cy="52%" r="1" opacity="0.2" />
           </g>
           <g fill="#38bdf8">
-            <circle cx="16%" cy="18%" r="1.2" opacity="0.6" />
-            <circle cx="46%" cy="8%" r="1" opacity="0.5" />
-            <circle cx="77%" cy="22%" r="1.5" opacity="0.65" />
+            <circle cx="16%" cy="18%" r="1.2" opacity="0.4" />
+            <circle cx="46%" cy="8%" r="1" opacity="0.3" />
+            <circle cx="77%" cy="22%" r="1.5" opacity="0.42" />
           </g>
         </svg>
       </div>
@@ -91,16 +91,16 @@ const EarthCinematicBackground = memo(({ mousePos, isMobile, enableBlur, enableM
           alt="Earth Command Center Horizon"
           decoding="async"
           fetchPriority="high"
-          className="w-full h-auto object-cover object-top opacity-95 pointer-events-none select-none drop-shadow-[0_0_80px_rgba(0,229,255,0.28)]"
+          className="w-full h-auto object-cover object-top opacity-90 pointer-events-none select-none drop-shadow-[0_0_45px_rgba(0,229,255,0.16)]"
         />
 
         {/* Dynamic Atmosphere Rim Glow */}
-        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/25 via-[#3B82F6]/10 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-80 pointer-events-none mix-blend-screen" />
+        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/14 via-[#3B82F6]/05 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-60 pointer-events-none mix-blend-screen" />
       </div>
     </motion.div>
 
     {/* 5. VIGNETTE OVERLAY */}
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#010309_100%)] z-30 pointer-events-none" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#010309_95%)] z-30 pointer-events-none" />
   </div>
 ));
 EarthCinematicBackground.displayName = "EarthCinematicBackground";
@@ -195,7 +195,7 @@ export const DesktopHero: React.FC = memo(() => {
           initial={{ opacity: 0, filter: "blur(6px)" }}
           animate={{ opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 1, 0.5, 1] }} 
-          className="text-[38px] sm:text-[60px] md:text-[74px] lg:text-[86px] font-heading font-[800] text-white tracking-tight mb-3 text-center leading-[1.05] drop-shadow-xl"
+          className="text-[38px] sm:text-[60px] md:text-[74px] lg:text-[74px] font-heading font-[800] text-white tracking-tight mb-3 text-center leading-[1.05] drop-shadow-xl"
         >
           Prajval Mahadev Injar
         </motion.h1>
@@ -241,7 +241,7 @@ export const DesktopHero: React.FC = memo(() => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.2 }}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[250px] sm:w-[680px] sm:h-[500px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/20 via-[#00E5FF]/08 to-transparent blur-[35px] sm:blur-[85px] pointer-events-none"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[250px] sm:w-[680px] sm:h-[500px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/16 via-[#00E5FF]/06 to-transparent blur-[35px] sm:blur-[85px] pointer-events-none"
           />
         )}
 
