@@ -279,7 +279,7 @@ export const DesktopHero: React.FC = memo(() => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-6xl px-6 -mt-16 sm:-mt-24 md:-mt-28 z-20 relative pointer-events-auto"
+        className="w-full max-w-6xl px-6 -mt-10 sm:-mt-16 md:-mt-18 z-20 relative pointer-events-auto"
       >
         <InteractiveCards />
       </motion.div>
