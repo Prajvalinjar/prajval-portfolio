@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveCards from "./InteractiveCards";
 import HeroHUD from "./HeroHUD";
@@ -23,15 +23,15 @@ interface EarthCinematicBackgroundProps {
 }
 
 const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, enableMotion }: EarthCinematicBackgroundProps) => (
-  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#010309]">
-    {/* 1. DEEP BLACK SPACE BASE LAYER */}
-    <div className="absolute inset-0 bg-[#010309]" />
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">
+    {/* 1. SEAMLESS DEEP SPACE BASE LAYER (Starts at pixel 0 with zero top gap) */}
+    <div className="absolute inset-0 bg-[#030509]" />
 
-    {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
-    <div className={`absolute -top-[12%] -left-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] opacity-35 sm:opacity-45 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
-    <div className={`absolute -top-[12%] -right-[12%] w-[60vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.12)_0%,rgba(56,189,248,0.08)_40%,transparent_75%)] opacity-35 sm:opacity-45 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    {/* 2. ELEGANT LOW-SATURATION NEBULA DUST */}
+    <div className={`absolute -top-[15%] -left-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[15%] -right-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
 
-    {/* 3. MULTI-SCALE DRIFTING STARFIELD */}
+    {/* 3. SUBTLE DRIFTING STARFIELD */}
     <motion.div
       animate={isMobile || !enableMotion ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.12,
@@ -43,46 +43,46 @@ const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, e
       {/* Film Grain Texture */}
       {enableBlur && (
         <div
-          className="hidden sm:block absolute inset-0 opacity-[0.012] mix-blend-overlay pointer-events-none"
+          className="hidden sm:block absolute inset-0 opacity-[0.01] mix-blend-overlay pointer-events-none"
           style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }}
         />
       )}
 
-      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-55 pointer-events-none">
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-35 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <g fill="#ffffff">
-            <circle cx="7%" cy="10%" r="0.9" opacity="0.6" />
-            <circle cx="20%" cy="6%" r="1.3" opacity="0.7" />
-            <circle cx="36%" cy="16%" r="0.7" opacity="0.35" />
-            <circle cx="53%" cy="4%" r="1.1" opacity="0.65" />
-            <circle cx="70%" cy="10%" r="1.4" opacity="0.7" />
-            <circle cx="86%" cy="16%" r="1" opacity="0.6" />
-            <circle cx="94%" cy="6%" r="1.2" opacity="0.5" />
-            <circle cx="11%" cy="30%" r="0.8" opacity="0.35" />
-            <circle cx="28%" cy="36%" r="1" opacity="0.45" />
-            <circle cx="66%" cy="26%" r="1.2" opacity="0.5" />
-            <circle cx="90%" cy="36%" r="0.9" opacity="0.45" />
-            <circle cx="4%" cy="56%" r="1.1" opacity="0.3" />
-            <circle cx="23%" cy="50%" r="0.7" opacity="0.25" />
-            <circle cx="80%" cy="52%" r="1" opacity="0.3" />
+            <circle cx="7%" cy="10%" r="0.8" opacity="0.5" />
+            <circle cx="20%" cy="6%" r="1.1" opacity="0.6" />
+            <circle cx="36%" cy="16%" r="0.6" opacity="0.3" />
+            <circle cx="53%" cy="4%" r="1.0" opacity="0.55" />
+            <circle cx="70%" cy="10%" r="1.2" opacity="0.6" />
+            <circle cx="86%" cy="16%" r="0.9" opacity="0.5" />
+            <circle cx="94%" cy="6%" r="1.1" opacity="0.4" />
+            <circle cx="11%" cy="30%" r="0.7" opacity="0.3" />
+            <circle cx="28%" cy="36%" r="0.9" opacity="0.4" />
+            <circle cx="66%" cy="26%" r="1.1" opacity="0.45" />
+            <circle cx="90%" cy="36%" r="0.8" opacity="0.4" />
+            <circle cx="4%" cy="56%" r="1.0" opacity="0.25" />
+            <circle cx="23%" cy="50%" r="0.6" opacity="0.2" />
+            <circle cx="80%" cy="52%" r="0.9" opacity="0.25" />
           </g>
           <g fill="#38bdf8">
-            <circle cx="16%" cy="18%" r="1.2" opacity="0.6" />
-            <circle cx="46%" cy="8%" r="1" opacity="0.5" />
-            <circle cx="77%" cy="22%" r="1.5" opacity="0.65" />
+            <circle cx="16%" cy="18%" r="1.1" opacity="0.5" />
+            <circle cx="46%" cy="8%" r="0.9" opacity="0.4" />
+            <circle cx="77%" cy="22%" r="1.3" opacity="0.55" />
           </g>
         </svg>
       </div>
     </motion.div>
 
-    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET */}
+    {/* 4. DISTANT CINEMATIC EARTH COMMAND CENTER BACKGROUND ASSET (Top 0px for zero seams) */}
     <motion.div
       animate={isMobile || !enableMotion ? { x: 0, y: 0 } : {
         x: mousePos.x * 0.2,
         y: mousePos.y * 0.08
       }}
       transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
-      className="absolute top-[8%] sm:top-[5%] bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
+      className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
     >
       <div className="relative w-full h-full flex items-start justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -91,11 +91,11 @@ const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, e
           alt="Earth Command Center Horizon"
           decoding="async"
           fetchPriority="high"
-          className="w-full h-auto object-cover object-top opacity-95 pointer-events-none select-none drop-shadow-[0_0_80px_rgba(0,229,255,0.28)]"
+          className="w-full h-auto object-cover object-top opacity-85 brightness-[0.78] contrast-[0.95] pointer-events-none select-none drop-shadow-[0_0_40px_rgba(0,229,255,0.14)]"
         />
 
-        {/* Dynamic Atmosphere Rim Glow */}
-        <div className="absolute top-[4%] sm:top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[180px] sm:h-[320px] bg-gradient-to-b from-[#00E5FF]/25 via-[#3B82F6]/10 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-80 pointer-events-none mix-blend-screen" />
+        {/* Quiet Atmospheric Rim Glow */}
+        <div className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[160px] sm:h-[280px] bg-gradient-to-b from-[#00E5FF]/14 via-[#3B82F6]/05 to-transparent rounded-[100%] blur-[30px] sm:blur-[60px] opacity-50 pointer-events-none mix-blend-screen" />
       </div>
     </motion.div>
   </div>
@@ -156,7 +156,7 @@ export default function HeroReveal() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.0, ease: "easeOut" }}
-      className="relative w-full min-h-screen flex flex-col items-center justify-between pt-24 sm:pt-28 md:pt-32 pb-8 overflow-hidden select-none"
+      className="relative w-full min-h-[92vh] sm:min-h-screen flex flex-col items-center justify-between pt-16 sm:pt-20 md:pt-22 pb-6 overflow-hidden select-none"
     >
       {/* 1. CINEMATIC EARTH COMMAND CENTER BACKGROUND */}
       <EarthCinematicBackground 
@@ -221,17 +221,17 @@ export default function HeroReveal() {
       {/* Portrait Container */}
       <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-16 sm:-mt-22 md:-mt-26 z-10 pointer-events-none">
         
-        {/* Soft Cyan Volumetric Light emanating upward */}
+        {/* Soft Natural Atmospheric Glow underneath portrait */}
         {perf.enableVolumetricGlow && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.2 }}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[250px] sm:w-[680px] sm:h-[500px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/20 via-[#00E5FF]/08 to-transparent blur-[35px] sm:blur-[85px] pointer-events-none"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[220px] sm:w-[620px] sm:h-[420px] rounded-t-full bg-gradient-to-t from-[#00E5FF]/14 via-[#00E5FF]/04 to-transparent blur-[35px] sm:blur-[75px] pointer-events-none"
           />
         )}
 
-        {/* The Portrait */}
+        {/* The Portrait Focal Point */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={isMobile || perf.tier === "LOW" ? { opacity: 1, y: 0, x: 0 } : { 
@@ -246,8 +246,8 @@ export default function HeroReveal() {
           }}
           className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] z-10 sm:animate-[breath_8s_ease-in-out_infinite]"
         >
-          {/* Subtle cyan rim light and soft shadow */}
-          <div className="absolute inset-0 w-full h-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)] drop-shadow-[0_0_15px_rgba(0,229,255,0.25)]">
+          {/* Natural rim light and subtle ambient shadow */}
+          <div className="absolute inset-0 w-full h-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] drop-shadow-[0_0_18px_rgba(0,229,255,0.2)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/profile_cutout_clean.webp" 
@@ -285,12 +285,12 @@ export default function HeroReveal() {
             handleScrollToJourney();
           }
         }}
-        className="mt-16 mb-8 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
+        className="mt-10 sm:mt-12 mb-4 flex flex-col items-center gap-4 z-20 cursor-pointer group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none p-2 rounded-xl"
       >
         <span className="text-[10px] font-mono tracking-widest text-secondary/60 group-hover:text-white transition-colors uppercase">
           Explore My Story <span className="opacity-50 group-hover:translate-y-1 inline-block transition-transform">↓</span>
         </span>
-        <div className="w-[1px] h-16 bg-gradient-to-b from-[#00E5FF]/40 to-transparent animate-[pulse_2.5s_ease-in-out_infinite]" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-[#00E5FF]/40 to-transparent animate-[pulse_2.5s_ease-in-out_infinite]" />
       </motion.div>
 
     </motion.div>
