@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const Noise = () => (
@@ -284,7 +284,7 @@ function MagneticCard({
   );
 }
 
-export default function InteractiveCards() {
+export function InteractiveCardsComponent() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full" style={{ perspective: 1200 }}>
       <MagneticCard 
@@ -359,5 +359,8 @@ export default function InteractiveCards() {
       />
     </div>
   );
+
 }
+
+export default React.memo(InteractiveCardsComponent);
 

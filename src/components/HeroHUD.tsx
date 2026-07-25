@@ -1,10 +1,11 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { useToast } from "./ToastContext";
 import { FileText } from "lucide-react";
 
-export default function HeroHUD() {
+export function HeroHUDComponent() {
   const { showCopy } = useToast();
 
   const handleMailClick = (e: React.MouseEvent) => {
@@ -144,3 +145,5 @@ export default function HeroHUD() {
     </motion.div>
   );
 }
+
+export default React.memo(HeroHUDComponent);

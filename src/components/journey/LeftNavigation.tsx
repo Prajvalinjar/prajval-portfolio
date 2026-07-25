@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -67,7 +67,7 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-export default function LeftNavigation() {
+export function LeftNavigationComponent() {
   const [activeId, setActiveId] = useState("01");
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -305,4 +305,6 @@ export default function LeftNavigation() {
     </>
   );
 }
+
+export default React.memo(LeftNavigationComponent);
 
