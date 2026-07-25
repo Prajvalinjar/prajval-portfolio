@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DesktopCards from "@/components/cards/DesktopCards";
+import InteractiveCards from "@/components/InteractiveCards";
 import HeroHUD from "@/components/HeroHUD";
-import HeroBackground from "./HeroBackground";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePerformanceTier } from "@/hooks/usePerformanceTier";
 
@@ -16,12 +15,100 @@ const ROLES = [
   "Building Intelligent Products"
 ];
 
+interface EarthCinematicBackgroundProps {
+  mousePos: { x: number; y: number };
+  isMobile: boolean;
+  enableBlur: boolean;
+  enableMotion: boolean;
+}
+
+const EarthCinematicBackground = React.memo(({ mousePos, isMobile, enableBlur, enableMotion }: EarthCinematicBackgroundProps) => (
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">
+    {/* 1. SEAMLESS DEEP SPACE BASE LAYER */}
+    <div className="absolute inset-0 bg-[#030509]" />
+
+    {/* 2. ELEGANT LOW-SATURATION NEBULA DUST */}
+    <div className={`absolute -top-[15%] -left-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform -rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+    <div className={`absolute -top-[15%] -right-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform rotate-12 ${enableBlur ? 'blur-[40px] sm:blur-[110px]' : ''}`} />
+
+    {/* 3. SUBTLE DRIFTING STARFIELD */}
+    <motion.div
+      animate={isMobile || !enableMotion ? { x: 0, y: 0 } : {
+        x: mousePos.x * 0.12,
+        y: mousePos.y * 0.12
+      }}
+      transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 30, damping: 30 }}
+      className="absolute inset-0 z-0 pointer-events-none"
+    >
+      {/* Film Grain Texture */}
+      {enableBlur && (
+        <div
+          className="hidden sm:block absolute inset-0 opacity-[0.01] mix-blend-overlay pointer-events-none"
+          style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }}
+        />
+      )}
+
+      <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-35 pointer-events-none">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <g fill="#ffffff">
+            <circle cx="7%" cy="10%" r="0.8" opacity="0.5" />
+            <circle cx="20%" cy="6%" r="1.1" opacity="0.6" />
+            <circle cx="36%" cy="16%" r="0.6" opacity="0.3" />
+            <circle cx="53%" cy="4%" r="1.0" opacity="0.55" />
+            <circle cx="70%" cy="10%" r="1.2" opacity="0.6" />
+            <circle cx="86%" cy="16%" r="0.9" opacity="0.5" />
+            <circle cx="94%" cy="6%" r="1.1" opacity="0.4" />
+            <circle cx="11%" cy="30%" r="0.7" opacity="0.3" />
+            <circle cx="28%" cy="36%" r="0.9" opacity="0.4" />
+            <circle cx="66%" cy="26%" r="1.1" opacity="0.45" />
+            <circle cx="90%" cy="36%" r="0.8" opacity="0.4" />
+            <circle cx="4%" cy="56%" r="1.0" opacity="0.25" />
+            <circle cx="23%" cy="50%" r="0.6" opacity="0.2" />
+            <circle cx="80%" cy="52%" r="0.9" opacity="0.25" />
+          </g>
+          <g fill="#38bdf8">
+            <circle cx="16%" cy="18%" r="1.1" opacity="0.5" />
+            <circle cx="46%" cy="8%" r="0.9" opacity="0.4" />
+            <circle cx="77%" cy="22%" r="1.3" opacity="0.55" />
+          </g>
+        </svg>
+      </div>
+    </motion.div>
+
+    {/* 4. REALISTIC EARTH COMMAND CENTER BACKGROUND ASSET */}
+    <motion.div
+      animate={isMobile || !enableMotion ? { x: 0, y: 0 } : {
+        x: mousePos.x * 0.2,
+        y: mousePos.y * 0.08
+      }}
+      transition={isMobile || !enableMotion ? { duration: 0 } : { type: "spring", stiffness: 35, damping: 30 }}
+      className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[132vw] sm:w-[115vw] z-10 pointer-events-none overflow-hidden transform-gpu"
+    >
+      <div className="relative w-full h-full flex items-start justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/earth_command_center_bg.webp"
+          alt="Earth Command Center Horizon"
+          decoding="async"
+          fetchPriority="high"
+          className="w-full h-auto object-cover object-top opacity-85 brightness-[0.78] contrast-[0.95] pointer-events-none select-none drop-shadow-[0_0_40px_rgba(0,229,255,0.14)]"
+        />
+
+        {/* Quiet Atmospheric Rim Glow */}
+        <div className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[160px] sm:h-[280px] bg-gradient-to-b from-[#00E5FF]/14 via-[#3B82F6]/05 to-transparent rounded-[100%] blur-[30px] sm:blur-[60px] opacity-50 pointer-events-none mix-blend-screen" />
+      </div>
+    </motion.div>
+  </div>
+));
+EarthCinematicBackground.displayName = "EarthCinematicBackground";
+
 export const DesktopHero: React.FC = React.memo(() => {
   const isMobile = useIsMobile();
   const perf = usePerformanceTier();
   const [roleIndex, setRoleIndex] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
+  // Rotate tagline roles
   useEffect(() => {
     const interval = setInterval(() => {
       setRoleIndex((prev) => (prev + 1) % ROLES.length);
@@ -29,6 +116,7 @@ export const DesktopHero: React.FC = React.memo(() => {
     return () => clearInterval(interval);
   }, []);
 
+  // Mouse Parallax listener with requestAnimationFrame throttling
   useEffect(() => {
     if (isMobile || perf.tier === "LOW") return;
 
@@ -64,16 +152,16 @@ export const DesktopHero: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <motion.div
+    <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.0, ease: "easeOut" }}
       className="relative w-full min-h-[92vh] sm:min-h-screen flex flex-col items-center justify-between pt-16 sm:pt-20 md:pt-22 pb-6 overflow-hidden select-none"
     >
       {/* 1. CINEMATIC EARTH COMMAND CENTER BACKGROUND */}
-      <HeroBackground
-        mousePos={mousePos}
-        isMobile={false}
+      <EarthCinematicBackground 
+        mousePos={mousePos} 
+        isMobile={isMobile} 
         enableBlur={perf.enableHeavyBlur}
         enableMotion={perf.enableContinuousEarthRotation}
       />
@@ -88,6 +176,7 @@ export const DesktopHero: React.FC = React.memo(() => {
         transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 sm:px-6"
       >
+        {/* Futuristic Status Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#080E1A]/80 border border-[#00E5FF]/30 text-[#00E5FF] text-[11px] sm:text-xs font-mono tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(0,229,255,0.15)] backdrop-blur-md">
           <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-ping" />
           <span className="font-semibold">Prajval Mahadev Injar</span>
@@ -95,10 +184,12 @@ export const DesktopHero: React.FC = React.memo(() => {
           <span className="text-secondary/80 font-normal">ENGINEERING PORTFOLIO</span>
         </div>
 
+        {/* Main Hero Title */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1] mb-3 uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">
           Building <span className="bg-gradient-to-r from-white via-cyan-200 to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span> Products
         </h1>
 
+        {/* Roles Rotator */}
         <div className="h-8 sm:h-10 flex items-center justify-center relative w-full mb-2">
           <AnimatePresence mode="wait">
             <motion.h2
@@ -114,6 +205,7 @@ export const DesktopHero: React.FC = React.memo(() => {
           </AnimatePresence>
         </div>
 
+        {/* Highlighted Tagline */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -128,6 +220,8 @@ export const DesktopHero: React.FC = React.memo(() => {
 
       {/* Portrait Container */}
       <div className="relative w-full flex-1 flex flex-col items-center justify-center -mt-16 sm:-mt-22 md:-mt-26 z-10 pointer-events-none">
+        
+        {/* Soft Natural Atmospheric Glow underneath portrait */}
         {perf.enableVolumetricGlow && (
           <motion.div 
             initial={{ opacity: 0 }}
@@ -137,9 +231,14 @@ export const DesktopHero: React.FC = React.memo(() => {
           />
         )}
 
+        {/* The Portrait Focal Point */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0, x: mousePos.x }}
+          animate={isMobile || perf.tier === "LOW" ? { opacity: 1, y: 0, x: 0 } : { 
+            opacity: 1, 
+            y: 0,
+            x: mousePos.x,
+          }}
           transition={{ 
             opacity: { duration: 1.2, delay: 0.2, ease: "easeOut" },
             y: { duration: 1.2, delay: 0.2, ease: "easeOut" },
@@ -147,6 +246,7 @@ export const DesktopHero: React.FC = React.memo(() => {
           }}
           className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] z-10 sm:animate-[breath_8s_ease-in-out_infinite]"
         >
+          {/* Natural rim light and subtle ambient shadow */}
           <div className="absolute inset-0 w-full h-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] drop-shadow-[0_0_18px_rgba(0,229,255,0.2)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
@@ -167,7 +267,7 @@ export const DesktopHero: React.FC = React.memo(() => {
         transition={{ duration: 1.2, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-6xl px-6 -mt-12 sm:-mt-16 md:-mt-18 z-20 relative pointer-events-auto"
       >
-        <DesktopCards />
+        <InteractiveCards />
       </motion.div>
 
       {/* Scroll Indicator */}
