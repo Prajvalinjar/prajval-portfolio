@@ -19,12 +19,12 @@ export const HeroBackground: React.FC<HeroBackgroundProps> = React.memo(
 
       {/* 2. COSMIC PURPLE / CYAN NEBULA DUST */}
       <div
-        className={`absolute -top-[15%] -left-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform -rotate-12 ${
+        className={`absolute -top-[15%] -left-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.065)_0%,rgba(56,189,248,0.038)_45%,transparent_75%)] opacity-18 sm:opacity-25 pointer-events-none transform -rotate-12 ${
           enableBlur ? "blur-[40px] sm:blur-[110px]" : ""
         }`}
       />
       <div
-        className={`absolute -top-[15%] -right-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.07)_0%,rgba(56,189,248,0.04)_45%,transparent_75%)] opacity-20 sm:opacity-28 pointer-events-none transform rotate-12 ${
+        className={`absolute -top-[15%] -right-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.065)_0%,rgba(56,189,248,0.038)_45%,transparent_75%)] opacity-18 sm:opacity-25 pointer-events-none transform rotate-12 ${
           enableBlur ? "blur-[40px] sm:blur-[110px]" : ""
         }`}
       />
@@ -49,7 +49,7 @@ export const HeroBackground: React.FC<HeroBackgroundProps> = React.memo(
           />
         )}
 
-        <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-35 pointer-events-none">
+        <div className="absolute inset-0 sm:animate-[starDrift_28s_linear_infinite] opacity-30 pointer-events-none">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <g fill="#ffffff">
               <circle cx="7%" cy="10%" r="0.8" opacity="0.5" />
@@ -97,11 +97,11 @@ export const HeroBackground: React.FC<HeroBackgroundProps> = React.memo(
             alt="Earth Command Center Horizon"
             decoding="async"
             fetchPriority="high"
-            className="w-full h-auto object-cover object-top opacity-80 brightness-[0.75] contrast-[0.92] pointer-events-none select-none drop-shadow-[0_0_30px_rgba(0,229,255,0.12)]"
+            className="w-full h-auto object-cover object-top opacity-80 brightness-[0.70] contrast-[0.89] pointer-events-none select-none drop-shadow-[0_0_25px_rgba(0,229,255,0.10)]"
           />
 
           {/* Quiet Atmospheric Rim Glow */}
-          <div className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[160px] sm:h-[280px] bg-gradient-to-b from-[#00E5FF]/12 via-[#3B82F6]/04 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-45 pointer-events-none mix-blend-screen" />
+          <div className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[90%] h-[160px] sm:h-[280px] bg-gradient-to-b from-[#00E5FF]/11 via-[#3B82F6]/03 to-transparent rounded-[100%] blur-[25px] sm:blur-[60px] opacity-40 pointer-events-none mix-blend-screen" />
         </div>
       </motion.div>
     </div>

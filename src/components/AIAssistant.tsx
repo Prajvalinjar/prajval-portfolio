@@ -71,16 +71,16 @@ export default function AIAssistant() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-4 right-[14px] sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-none">
       
       <AnimatePresence>
         {isOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            initial={{ opacity: 0, y: 10, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4 w-72 sm:w-80 rounded-2xl bg-[#030303]/90 backdrop-blur-xl border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] p-5 pointer-events-auto"
+            exit={{ opacity: 0, y: 10, scale: 0.92 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/95 backdrop-blur-xl border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_0_30px_rgba(0,229,255,0.15)] p-5 pointer-events-auto"
           >
             <div className="flex items-start gap-3 mb-4">
               <AIGlyph />
@@ -119,16 +119,16 @@ export default function AIAssistant() {
       <AnimatePresence>
         {showButton && (
           <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.8, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-label="Toggle Portfolio AI Guide"
-            className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-full bg-[#050505]/80 backdrop-blur-md border border-white/10 hover:border-accent/30 hover:bg-[#0a0a0a] active:scale-[0.97] transition-all duration-300 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)] group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+            className="pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/85 backdrop-blur-xl border border-white/15 md:border-white/10 hover:border-accent/40 hover:bg-[#0a0a0a] active:scale-[0.94] transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.25)] md:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)] group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
           >
             <AIGlyph />
-            <div className="flex flex-col items-start pr-2">
+            <div className="hidden md:flex flex-col items-start pr-2 ml-3">
               <span className="text-[13px] font-semibold tracking-tight text-white/90 group-hover:text-white transition-colors">
                 AI Guide
               </span>
