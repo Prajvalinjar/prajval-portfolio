@@ -17,7 +17,9 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
     const handleClick = useCallback(() => {
       const el = document.getElementById(targetId);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
         window.history.pushState(null, "", `#${targetId}`);
       }
     }, [targetId]);
@@ -115,10 +117,10 @@ export const MobileCards: React.FC = React.memo(() => {
 
       <MobileCardItem
         systemId="[02] ENGINEERING.HUB"
-        title="Explore My Engineering"
-        subtitle="Architecture, systems, decision logs & case studies."
-        targetId="engineering-stack"
-        accentColor="#9333EA"
+        title="Engineering Projects"
+        subtitle="Featured AI, Full-Stack & Systems Case Studies."
+        targetId="projects"
+        accentColor="#00E5FF"
         icon={
           <svg
             width="18"

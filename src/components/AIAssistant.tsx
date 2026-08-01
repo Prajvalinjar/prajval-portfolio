@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "./ToastContext";
 
@@ -22,7 +23,11 @@ function AIGlyph() {
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const { showToast, showDownload } = useToast();
+  const { showToast } = useToast();
+  const pathname = usePathname();
+
+  const panelRef = useRef<HTMLDivElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     // Wait for hero animation (which takes ~5s total for BootSequence + HeroReveal)
@@ -30,6 +35,51 @@ export default function AIAssistant() {
     const timer = setTimeout(() => setShowButton(true), 6000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Automatically close AI Assistant on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Outside click, Escape key, and overlay dismissal handling
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(target) &&
+        fabRef.current &&
+        !fabRef.current.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    const handleCloseAI = () => setIsOpen(false);
+
+    // Listen to pointerdown on capture phase for reliable detection across desktop, touch & mobile
+    document.addEventListener("pointerdown", handlePointerDown, true);
+    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("closeModals", handleCloseAI);
+    window.addEventListener("popstate", handleCloseAI);
+    window.addEventListener("hashchange", handleCloseAI);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown, true);
+      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("closeModals", handleCloseAI);
+      window.removeEventListener("popstate", handleCloseAI);
+      window.removeEventListener("hashchange", handleCloseAI);
+    };
+  }, [isOpen]);
 
   const handleActionClick = (action: string) => {
     setIsOpen(false);
@@ -76,10 +126,11 @@ export default function AIAssistant() {
       <AnimatePresence>
         {isOpen && (
           <motion.div 
+            ref={panelRef}
             initial={{ opacity: 0, y: 10, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.92 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/95 backdrop-blur-xl border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_0_30px_rgba(0,229,255,0.15)] p-5 pointer-events-auto"
           >
             <div className="flex items-start gap-3 mb-4">
@@ -119,6 +170,7 @@ export default function AIAssistant() {
       <AnimatePresence>
         {showButton && (
           <motion.button
+            ref={fabRef}
             initial={{ opacity: 0, scale: 0.8, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}

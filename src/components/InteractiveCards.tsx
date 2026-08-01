@@ -185,7 +185,9 @@ function MagneticCard({
     if (targetId) {
       const el = document.getElementById(targetId);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
         window.history.pushState(null, "", `#${targetId}`);
       }
     }
@@ -305,15 +307,15 @@ export function InteractiveCardsComponent() {
       
       <MagneticCard 
         systemId="[02] ENGINEERING.HUB"
-        title="Explore My Engineering"
-        targetId="engineering-stack"
+        title="Engineering Projects"
+        targetId="projects"
         description={
           <ul className="flex flex-col gap-1.5">
             {[
-              "Architecture",
-              "Systems",
-              "Decision Logs",
-              "Case Studies"
+              "Featured Systems",
+              "AI & Full-Stack",
+              "Case Studies",
+              "Live Demos"
             ].map(item => (
               <li key={item} className="flex items-center gap-2">
                 <div className="w-1 h-1 rounded-full bg-accent/50 group-hover:bg-accent transition-colors duration-300" />

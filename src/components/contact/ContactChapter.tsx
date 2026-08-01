@@ -227,16 +227,18 @@ export default function ContactChapter() {
                     rel="noopener noreferrer"
                     onClick={handleResumeOpen}
                     aria-label="View Resume PDF in Browser"
-                    className="group flex flex-col items-center justify-center aspect-square p-2 lg:p-4 border border-white/10 rounded-xl bg-[#060810]/75 backdrop-blur-md shadow-sm hover:bg-[#F40F02]/15 hover:border-[#F40F02]/40 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative overflow-hidden focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+                    className="group flex flex-col items-center justify-center aspect-square p-2 lg:p-4 border border-white/10 rounded-xl bg-[#060810]/75 backdrop-blur-md shadow-sm hover:bg-[#00E5FF]/15 hover:border-[#00E5FF]/40 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative overflow-hidden focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
                   >
-                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#F40F02]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#00E5FF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <svg className="absolute top-2 right-2 w-3 h-3 text-secondary/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    <svg className="w-7 h-7 lg:w-9 lg:h-9 text-[#F40F02] group-hover:scale-105 transition-transform duration-300 mb-2 lg:mb-3 relative z-10" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19.5 0H4.5A1.5 1.5 0 0 0 3 1.5v21A1.5 1.5 0 0 0 4.5 24h15a1.5 1.5 0 0 0 1.5-1.5v-21A1.5 1.5 0 0 0 19.5 0zm-7.66 11.23c-1.07.69-2.3 1.25-3.5 1.63.15-.72.36-1.55.59-2.36.78-2.73 1.34-4.22 2.05-4.22.42 0 .7.3.7.82 0 1.15-1.5 3.01-1.5 3.01-.15.22-.3.42-.45.62 1.33 2.11 3 3.65 4.88 4.47 1.05.46 2.02.73 2.87.73.75 0 1.13-.37 1.13-.98 0-.6-.56-1.02-1.37-1.02-1.49 0-3.32 1.2-4.57 2.37-1.09 1.02-2.13 2.29-2.13 2.29-.69 1.03-1.63 1.9-2.6 1.9-.66 0-1.1-.38-1.1-.98 0-.82 1.24-2.16 3.12-3.32-.47-.21-1.02-.38-1.63-.5-1.17-.22-2.32-.23-3.33-.23H5v-10h14v11.77z"/>
+                    <svg className="w-7 h-7 lg:w-9 lg:h-9 text-[#00E5FF] group-hover:scale-105 transition-transform duration-300 mb-2 lg:mb-3 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                      <line x1="10" y1="9" x2="8" y2="9" />
                     </svg>
-                    <span className="text-[9px] lg:text-[10px] font-medium text-white/70 relative z-10">
-                      View Resume
-                    </span>
+                    <span className="text-[9px] lg:text-[10px] font-medium text-white/70 relative z-10 whitespace-nowrap">View Resume</span>
                   </a>
 
                   {/* Email */}

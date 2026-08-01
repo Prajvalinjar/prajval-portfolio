@@ -41,17 +41,39 @@ export default function AiAssistantChapter() {
   ]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
-  // Isolate scroll ONLY inside the chat container (Never scroll the browser page)
-  const scrollToChatBottom = () => {
+  // Monitor content height vs container height dynamically
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (chatContainerRef.current) {
+        const { scrollHeight, clientHeight } = chatContainerRef.current;
+        setHasOverflow(scrollHeight > clientHeight + 4);
+      }
+    };
+
+    checkOverflow();
+
+    const ro = new ResizeObserver(checkOverflow);
     if (chatContainerRef.current) {
+      ro.observe(chatContainerRef.current);
+    }
+
+    return () => ro.disconnect();
+  }, [messages, isThinking]);
+
+  // Smooth scroll to bottom only when chat has vertical overflow
+  const scrollToChatBottom = () => {
+    if (chatContainerRef.current && hasOverflow) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
   useEffect(() => {
-    scrollToChatBottom();
-  }, [messages, isThinking]);
+    if (hasOverflow) {
+      scrollToChatBottom();
+    }
+  }, [messages.length, isThinking, hasOverflow]);
 
   // Character-by-character typewriter streaming effect
   const streamResponseText = (fullText: string, messageId: string, responseData?: AIResponse) => {
@@ -243,10 +265,12 @@ export default function AiAssistantChapter() {
             </button>
           </div>
 
-          {/* ISOLATED CHAT CONVERSATION CONTAINER (Only this scrolls) */}
+          {/* CHAT CONVERSATION CONTAINER */}
           <div 
             ref={chatContainerRef} 
-            className="flex-1 p-4 sm:p-6 overflow-y-auto flex flex-col gap-4 min-h-0 scroll-smooth"
+            className={`flex-1 p-4 sm:p-6 flex flex-col gap-4 min-h-0 scroll-smooth overscroll-y-auto ${
+              hasOverflow ? "overflow-y-auto" : "overflow-hidden"
+            }`}
           >
             {messages.map((msg, index) => {
               const isElara = msg.sender === "elara";
