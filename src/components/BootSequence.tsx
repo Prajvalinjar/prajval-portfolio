@@ -59,11 +59,14 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
       return;
     }
 
-    // Mobile: Much faster boot — 400ms first visit, 200ms repeat
-    // Desktop: 1200ms first visit, 600ms repeat
-    const totalDurationMs = isMobile
-      ? (isRepeatVisit ? 200 : 400)
-      : (isRepeatVisit ? 600 : 1200);
+    // Check reduced motion preference
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Mobile: 2000ms first visit (readable ~2.0s presentation), 1000ms repeat visit (200ms if reduced motion)
+    // Desktop: 2000ms first visit, 1000ms repeat visit
+    const totalDurationMs = prefersReducedMotion
+      ? 200
+      : (isMobile ? (isRepeatVisit ? 1000 : 2000) : (isRepeatVisit ? 1000 : 2000));
     const intervalMs = 20;
     let elapsedMs = 0;
 
@@ -81,7 +84,7 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
         }
       }
 
-      // Boot Complete -> Fast transition into Hero
+      // Boot Complete -> Smooth 350ms transition into Hero
       if (elapsedMs >= totalDurationMs) {
         clearInterval(interval);
         setIsPulseExpanding(true);
@@ -94,7 +97,7 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
           setIsBooting(false);
           if (onUnlockScroll) onUnlockScroll();
           markAsBooted();
-        }, isMobile ? 80 : 150);
+        }, prefersReducedMotion ? 50 : 350);
       }
     }, intervalMs);
 
@@ -110,13 +113,13 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
           <motion.div
             initial={{ opacity: 1 }}
             animate={{ opacity: 1, scale: isPulseExpanding ? 1.02 : 1 }}
-            // Mobile: no expensive blur exit animation
+            // Mobile: lightweight opacity-only exit (no heavy GPU blur filter)
             exit={isMobile
               ? { opacity: 0 }
               : { opacity: 0, scale: 1.05, filter: "blur(16px)" }
             }
-            transition={{ duration: isMobile ? 0.2 : 0.35, ease: [0.25, 1, 0.5, 1] }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-12 bg-[#030509] text-white overflow-hidden pointer-events-auto select-none"
+            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-12 bg-[#030712] text-white overflow-hidden pointer-events-auto select-none"
           >
             {/* Ambient Grid Background */}
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
