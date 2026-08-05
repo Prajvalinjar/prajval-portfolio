@@ -56,7 +56,7 @@ export default function JourneyChapter() {
     <section
       ref={containerRef}
       id="journey"
-      className="relative w-full min-h-screen bg-transparent z-30 pt-20 pb-28"
+      className="relative w-full min-h-0 lg:min-h-screen bg-transparent z-30 pt-8 pb-12 lg:pt-20 lg:pb-28"
     >
       {/* Lightbox Modal Overlay */}
       <AnimatePresence>

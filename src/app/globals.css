@@ -140,9 +140,6 @@
       radial-gradient(ellipse 80% 50% at 20% 30%, rgba(0, 240, 203, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 60% at 80% 70%, rgba(147, 51, 234, 0.06), transparent 55%),
       #050c1e !important;
-    border-radius: 24px;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
   }
 
   /* 3. Projects: Deep Navy + Subtle Cyan Accent */
@@ -151,8 +148,6 @@
       radial-gradient(ellipse 80% 60% at 80% 25%, rgba(59, 130, 246, 0.07), transparent 55%),
       radial-gradient(ellipse 70% 50% at 20% 75%, rgba(0, 229, 255, 0.05), transparent 50%),
       #050e21 !important;
-    border-radius: 24px;
-    padding: 1.25rem 0.75rem;
   }
 
   /* 4. Tech Ecosystem: Deep Indigo / Navy */
@@ -161,8 +156,6 @@
       radial-gradient(ellipse 80% 50% at 50% 40%, rgba(147, 51, 234, 0.07), transparent 55%),
       radial-gradient(ellipse 70% 60% at 15% 85%, rgba(59, 130, 246, 0.05), transparent 50%),
       #060c22 !important;
-    border-radius: 24px;
-    padding: 1.25rem 0.75rem;
   }
 
   /* 5. Professional Growth: Deep Blue / Emerald Accent */
@@ -171,8 +164,6 @@
       radial-gradient(ellipse 80% 60% at 75% 30%, rgba(16, 185, 129, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 50% at 25% 70%, rgba(56, 189, 248, 0.05), transparent 50%),
       #040e1f !important;
-    border-radius: 24px;
-    padding: 1.25rem 0.75rem;
   }
 
   /* 6. AI Assistant: Navy + Subtle Purple Accent */
@@ -181,8 +172,6 @@
       radial-gradient(ellipse 80% 50% at 50% 35%, rgba(139, 92, 246, 0.08), transparent 55%),
       radial-gradient(ellipse 70% 60% at 85% 75%, rgba(0, 229, 255, 0.05), transparent 45%),
       #060a1e !important;
-    border-radius: 24px;
-    padding: 1.25rem 0.75rem;
   }
 
   /* 7. Contact: Return toward Deep Space Navy */
@@ -191,8 +180,6 @@
       radial-gradient(ellipse 80% 60% at 50% 40%, rgba(56, 189, 248, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 50% at 15% 80%, rgba(147, 51, 234, 0.04), transparent 50%),
       #030712 !important;
-    border-radius: 24px;
-    padding: 1.25rem 0.75rem;
   }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

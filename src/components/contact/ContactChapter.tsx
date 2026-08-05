@@ -69,13 +69,13 @@ export default function ContactChapter() {
   };
 
   return (
-    <section id="contact-chapter" className="relative w-full min-h-screen bg-transparent text-white py-16 overflow-hidden border-t border-white/5">
+    <section id="contact-chapter" className="relative w-full min-h-0 lg:min-h-screen bg-transparent text-white py-8 lg:py-16 overflow-hidden lg:border-t lg:border-white/5">
       
       <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div className="w-full h-full bg-grid-pattern" />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col flex-1 pb-10 min-h-full">
+      <div className="relative z-10 w-full flex flex-col flex-1 pb-6 lg:pb-10">
         
         {/* Header */}
           <div className="flex flex-col items-start gap-3 mb-10">

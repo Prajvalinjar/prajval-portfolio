@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function StackHero() {
   return (
-    <div className="w-full flex flex-col md:flex-row gap-8 justify-between items-start md:items-center relative">
+    <div className="w-full flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-start md:items-center relative">
       
       {/* Left side: Chapter Title & Description */}
       <div className="flex flex-col gap-3 w-full md:w-[65%] z-10">

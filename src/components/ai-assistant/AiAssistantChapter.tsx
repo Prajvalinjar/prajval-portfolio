@@ -183,7 +183,7 @@ export default function AiAssistantChapter() {
   };
 
   return (
-    <section id="portfolio-ai-chapter" className="relative w-full py-12 bg-transparent text-white overflow-hidden flex flex-col items-center">
+    <section id="portfolio-ai-chapter" className="relative w-full py-8 lg:py-12 bg-transparent text-white overflow-hidden flex flex-col items-center">
       {/* Background blueprint grid */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div className="w-full h-full bg-grid-pattern" />

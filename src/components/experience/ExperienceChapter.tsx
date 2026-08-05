@@ -100,7 +100,7 @@ const CERTIFICATES: Certificate[] = [
 
 export default function ExperienceChapter() {
   return (
-    <section className="relative w-full min-h-screen bg-transparent text-white py-16 overflow-hidden border-t border-white/5">
+    <section className="relative w-full min-h-0 lg:min-h-screen bg-transparent text-white py-8 lg:py-16 overflow-hidden lg:border-t lg:border-white/5">
       {/* Background blueprint grid */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div className="w-full h-full bg-grid-pattern" />

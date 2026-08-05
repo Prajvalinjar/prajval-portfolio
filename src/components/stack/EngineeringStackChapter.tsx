@@ -10,16 +10,16 @@ export default function EngineeringStackChapter() {
   const [selectedTechId, setSelectedTechId] = useState<string | null>(null);
 
   return (
-    <section className="relative w-full min-h-screen bg-transparent text-white py-24 lg:py-32 overflow-hidden border-t border-white/5">
+    <section className="relative w-full min-h-0 lg:min-h-screen bg-transparent text-white py-8 lg:py-32 overflow-hidden lg:border-t lg:border-white/5">
       {/* Background blueprint grid */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]">
         <div className="w-full h-full bg-grid-pattern" />
       </div>
 
-      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         
         {/* Center Content */}
-        <div className="lg:col-span-8 flex flex-col gap-10 xl:gap-12">
+        <div className="lg:col-span-8 flex flex-col gap-6 lg:gap-10 xl:gap-12">
           {/* Hero Header */}
           <StackHero />
           
