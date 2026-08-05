@@ -232,6 +232,35 @@
     border-color: rgba(0, 229, 255, 0.5) !important;
     box-shadow: 0 0 16px rgba(0, 229, 255, 0.18) !important;
   }
+
+  /* Mobile Ambient HUD Beacon Pulse Ring Animation */
+  .hud-pulse-ring {
+    animation: hudNodePulse 4.5s cubic-bezier(0.16, 1, 0.3, 1) infinite !important;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hud-pulse-ring {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+  }
+}
+
+/* Ambient HUD Pulse Node Animation (Compositor-friendly transform + opacity only) */
+@keyframes hudNodePulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 
