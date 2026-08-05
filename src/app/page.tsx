@@ -121,7 +121,7 @@ function PortfolioApp() {
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-[#030509] overflow-x-clip">
+    <div className="relative w-full min-h-screen bg-[#030712] md:bg-[#030509] overflow-x-clip">
       <AnimatePresence mode="wait">
         {!hasBooted ? (
           /* STEP 1: Boot Sequence (ONLY component mounted in DOM during startup) */

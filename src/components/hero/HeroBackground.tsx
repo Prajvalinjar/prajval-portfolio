@@ -21,12 +21,12 @@ export const HeroBackground: React.FC<HeroBackgroundProps> = React.memo(
        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     if (isMobile) {
       return (
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">
-          {/* 1. Deep space base */}
-          <div className="absolute inset-0 bg-[#030509]" />
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030712]">
+          {/* 1. Deep space navy base */}
+          <div className="absolute inset-0 bg-[#030712]" />
 
-          {/* 2. Subtle static cosmic tint (no blur) */}
-          <div className="absolute -top-[15%] -left-[15%] w-[65vw] h-[75vh] bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.04)_0%,rgba(56,189,248,0.02)_45%,transparent_75%)] opacity-18 pointer-events-none transform -rotate-12" />
+          {/* 2. Subtle static space cyan/purple radial gradient tint */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_15%,rgba(0,229,255,0.07),transparent_60%),radial-gradient(ellipse_70%_50%_at_80%_65%,rgba(147,51,234,0.05),transparent_50%)] pointer-events-none" />
 
           {/* 3. Static starfield (no animation, reduced opacity) */}
           <div className="absolute inset-0 z-0 pointer-events-none">
