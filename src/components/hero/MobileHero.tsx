@@ -50,8 +50,8 @@ export const MobileHero: React.FC = React.memo(() => {
 
       {/* Mobile Storytelling Header Composition */}
       <div className="relative z-20 flex flex-col items-center text-center max-w-sm px-4 pt-1">
-        {/* 1. Hero Badge — no backdrop-blur, static dot (no animate-ping) */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1A]/95 border border-[#00E5FF]/40 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-2 shadow-sm">
+        {/* 1. Hero Badge — pill shape with soft cyan border */}
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#080E1A]/95 border border-[#00E5FF]/20 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
           <span className="font-semibold">ENGINEERING PORTFOLIO</span>
         </div>
@@ -112,23 +112,20 @@ export const MobileHero: React.FC = React.memo(() => {
         </div>
       </motion.div>
 
-      {/* 7. Mobile Cards (Unified 12px upward shift) */}
-      <div className="w-full max-w-sm px-3 z-20 relative -mt-12">
+      {/* 7. Mobile Cards (16px side margins px-4) */}
+      <div className="w-full max-w-md px-4 z-20 relative -mt-12">
         <MobileCards />
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator — pill shape button */}
       <div
         role="button"
         tabIndex={0}
         aria-label="Scroll to My Journey"
         onClick={handleScrollToJourney}
-        className="mt-3 mb-1 flex flex-col items-center gap-1.5 z-20 cursor-pointer group p-1.5 active:scale-95 transition-all"
+        className="mt-4 mb-1 flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/5 bg-[#030612]/80 text-[#00E5FF]/80 text-[10px] font-mono tracking-widest uppercase z-20 cursor-pointer active:scale-95 transition-all"
       >
-        <span className="text-[9px] font-mono tracking-widest text-secondary/60 uppercase">
-          EXPLORE STORY ↓
-        </span>
-        <div className="w-[1px] h-6 bg-gradient-to-b from-[#00E5FF]/50 to-transparent" />
+        <span>EXPLORE STORY ↓</span>
       </div>
     </div>
   );

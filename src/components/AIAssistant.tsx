@@ -122,14 +122,14 @@ export default function AIAssistant() {
     }
   };
 
-  // Mobile: near-opaque bg, no blur. Desktop: glassmorphism.
+  // Mobile: near-opaque bg, soft border. Desktop: glassmorphism.
   const panelClassName = isMobile
-    ? "mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/97 border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] p-5 pointer-events-auto"
+    ? "mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/97 border border-white/8 p-5 pointer-events-auto"
     : "mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/95 backdrop-blur-xl border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_0_30px_rgba(0,229,255,0.15)] p-5 pointer-events-auto";
 
-  // Mobile: subtle static border, no glow shadow. Desktop: full glassmorphism with glow.
+  // Mobile: subtle static border, active glow on tap. Desktop: full glassmorphism with glow.
   const fabClassName = isMobile
-    ? "pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/95 border border-[#00E5FF]/30 active:scale-[0.94] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+    ? "pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/95 border border-white/10 active:border-[#00E5FF]/40 active:scale-[0.94] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
     : "pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/85 backdrop-blur-xl border border-white/15 md:border-white/10 hover:border-accent/40 hover:bg-[#0a0a0a] active:scale-[0.94] transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.25)] md:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)] group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none";
 
   return (
@@ -168,7 +168,7 @@ export default function AIAssistant() {
                 <button 
                   key={i}
                   onClick={() => handleActionClick(action)}
-                  className="flex items-center gap-2 px-3 py-2 text-[12px] font-medium text-secondary/80 bg-white/[0.03] hover:bg-accent/10 hover:text-accent border border-white/5 hover:border-accent/20 rounded-lg active:scale-[0.98] transition-all duration-300 w-full text-left focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+                  className="flex items-center gap-2 px-3.5 py-2 text-[12px] font-medium text-secondary/80 bg-white/[0.03] hover:bg-accent/10 hover:text-accent border border-white/5 hover:border-accent/20 rounded-full active:scale-[0.98] transition-all duration-300 w-full text-left focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
                 >
                   <span className="w-1 h-1 rounded-full bg-current opacity-50" />
                   {action}

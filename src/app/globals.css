@@ -140,7 +140,7 @@
       radial-gradient(ellipse 80% 50% at 20% 30%, rgba(0, 240, 203, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 60% at 80% 70%, rgba(147, 51, 234, 0.06), transparent 55%),
       #050c1e !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
@@ -151,7 +151,7 @@
       radial-gradient(ellipse 80% 60% at 80% 25%, rgba(59, 130, 246, 0.07), transparent 55%),
       radial-gradient(ellipse 70% 50% at 20% 75%, rgba(0, 229, 255, 0.05), transparent 50%),
       #050e21 !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 1.25rem 0.75rem;
   }
 
@@ -161,7 +161,7 @@
       radial-gradient(ellipse 80% 50% at 50% 40%, rgba(147, 51, 234, 0.07), transparent 55%),
       radial-gradient(ellipse 70% 60% at 15% 85%, rgba(59, 130, 246, 0.05), transparent 50%),
       #060c22 !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 1.25rem 0.75rem;
   }
 
@@ -171,7 +171,7 @@
       radial-gradient(ellipse 80% 60% at 75% 30%, rgba(16, 185, 129, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 50% at 25% 70%, rgba(56, 189, 248, 0.05), transparent 50%),
       #040e1f !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 1.25rem 0.75rem;
   }
 
@@ -181,7 +181,7 @@
       radial-gradient(ellipse 80% 50% at 50% 35%, rgba(139, 92, 246, 0.08), transparent 55%),
       radial-gradient(ellipse 70% 60% at 85% 75%, rgba(0, 229, 255, 0.05), transparent 45%),
       #060a1e !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 1.25rem 0.75rem;
   }
 
@@ -191,8 +191,42 @@
       radial-gradient(ellipse 80% 60% at 50% 40%, rgba(56, 189, 248, 0.06), transparent 55%),
       radial-gradient(ellipse 70% 50% at 15% 80%, rgba(147, 51, 234, 0.04), transparent 50%),
       #030712 !important;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 1.25rem 0.75rem;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BORDER & LAYOUT POLISH (REDUCE VISUAL NOISE)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  /* Lower border opacity on card elements on mobile (reduced by ~40-50%) */
+  .border-white\/10,
+  .border-white\/15,
+  .border-white\/20 {
+    border-color: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  /* Soften cyan/purple decorative accent borders */
+  .border-\[\#00E5FF\]\/40,
+  .border-\[\#00E5FF\]\/30 {
+    border-color: rgba(0, 229, 255, 0.18) !important;
+  }
+
+  /* Remove constant glow shadows on mobile — reserve for active/hover */
+  [class*="shadow-\[0_0_"] {
+    box-shadow: none !important;
+  }
+
+  [class*="shadow-\[0_10px_30px"] {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Active / Focus Glow Feedback */
+  .active\:scale-\[0\.98\]:active,
+  button:active,
+  a:active {
+    border-color: rgba(0, 229, 255, 0.5) !important;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.18) !important;
   }
 }
 
