@@ -189,7 +189,7 @@ export default function AiAssistantChapter() {
         <div className="w-full h-full bg-grid-pattern" />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col items-center">
+      <div className="relative z-10 w-full flex flex-col items-center px-4 sm:px-0">
         
         {/* 1. CHAPTER HEADER */}
         <div className="flex flex-col items-center text-center gap-1.5 mb-6">

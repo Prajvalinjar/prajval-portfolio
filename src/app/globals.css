@@ -126,6 +126,23 @@
     background-color: #030712 !important;
   }
 
+  /* Full-width mobile section backgrounds (100% viewport width, 0 side gutters) */
+  #journey,
+  #projects,
+  #engineering-stack,
+  #professional-growth,
+  #ai-assistant,
+  #contact,
+  #portfolio-ai-chapter,
+  #contact-chapter {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border: none !important;
+    box-sizing: border-box !important;
+  }
+
   /* 1. Hero: Deep Navy + Subtle Cyan Atmosphere */
   #hero-section {
     background: 

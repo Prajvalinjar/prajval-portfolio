@@ -84,7 +84,7 @@ export default function ProjectsCenter({
   };
 
   return (
-    <div className="flex flex-col w-full min-w-0 relative">
+    <div className="flex flex-col w-full min-w-0 relative px-4 sm:px-0">
       {/* Quick Preview Modal */}
       <AnimatePresence>
         {previewProject && (

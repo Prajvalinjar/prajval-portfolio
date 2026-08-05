@@ -77,7 +77,7 @@ export default function JourneyChapter() {
         <div className="w-[1px] h-full bg-white absolute right-1/4" />
       </div>
 
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-stretch">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-stretch px-4 sm:px-0">
         {/* Main Timeline Column */}
         <div className="lg:col-span-8 flex flex-col relative w-full min-w-0">
           {/* Chapter Header */}
@@ -85,7 +85,7 @@ export default function JourneyChapter() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mb-10 ml-2 sm:ml-28"
+            className="mb-10 ml-0 sm:ml-28"
           >
             <div className="text-accent text-[10px] font-mono tracking-widest uppercase mb-3">
               CHAPTER 02

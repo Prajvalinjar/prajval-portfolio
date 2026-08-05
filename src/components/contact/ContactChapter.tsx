@@ -75,7 +75,7 @@ export default function ContactChapter() {
         <div className="w-full h-full bg-grid-pattern" />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col flex-1 pb-6 lg:pb-10">
+      <div className="relative z-10 w-full flex flex-col flex-1 pb-6 lg:pb-10 px-4 sm:px-0">
         
         {/* Header */}
           <div className="flex flex-col items-start gap-3 mb-10">

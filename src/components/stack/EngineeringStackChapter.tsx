@@ -16,7 +16,7 @@ export default function EngineeringStackChapter() {
         <div className="w-full h-full bg-grid-pattern" />
       </div>
 
-      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 px-4 sm:px-0">
         
         {/* Center Content */}
         <div className="lg:col-span-8 flex flex-col gap-6 lg:gap-10 xl:gap-12">
