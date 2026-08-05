@@ -35,7 +35,7 @@ const MobileCardItem: React.FC<MobileCardProps> = React.memo(
             handleClick();
           }
         }}
-        className="w-full min-h-[86px] p-3.5 sm:p-4 rounded-xl bg-[#080E1A]/85 border border-white/10 hover:border-[#00E5FF]/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#00E5FF]"
+        className="w-full min-h-[86px] p-3.5 sm:p-4 rounded-xl bg-[#080E1A]/95 border border-white/10 hover:border-[#00E5FF]/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden shadow-md focus:outline-none focus:ring-2 focus:ring-[#00E5FF]"
       >
         {/* Accent Top Line */}
         <div

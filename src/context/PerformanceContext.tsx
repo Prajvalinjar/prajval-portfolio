@@ -60,8 +60,15 @@ export const AdaptivePerformanceProvider: React.FC<{ children: React.ReactNode }
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isSmallScreen = window.innerWidth < 768;
+
     const detectHardwareTier = (): PerformanceTier => {
-      // 1. Reduced motion preference -> LOW
+      // 1. Mobile viewport -> always LOW for maximum performance
+      if (isSmallScreen) {
+        return "LOW";
+      }
+
+      // 2. Reduced motion preference -> LOW
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return "LOW";
       }
@@ -69,7 +76,6 @@ export const AdaptivePerformanceProvider: React.FC<{ children: React.ReactNode }
       const concurrency = navigator.hardwareConcurrency || 4;
       const memory = (navigator as unknown as { deviceMemory?: number }).deviceMemory || 4;
       const isTouch = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
-      const isSmallScreen = window.innerWidth < 768;
 
       // Low-end mobile or budget device (<4 cores or <3GB RAM) -> LOW
       if (concurrency < 4 || memory < 3) {
@@ -77,7 +83,7 @@ export const AdaptivePerformanceProvider: React.FC<{ children: React.ReactNode }
       }
 
       // Mid-range mobile/tablet or 4-core desktop -> MEDIUM
-      if (isTouch || isSmallScreen || concurrency <= 4 || memory <= 4) {
+      if (isTouch || concurrency <= 4 || memory <= 4) {
         return "MEDIUM";
       }
 
@@ -88,7 +94,10 @@ export const AdaptivePerformanceProvider: React.FC<{ children: React.ReactNode }
     const initialTier = detectHardwareTier();
     setFlags(TIER_FLAGS[initialTier]);
 
-    // 2. Real-time Frame Drop Monitor (Downgrade tier if under sustained frame pressure)
+    // Skip FPS monitor on mobile — already at LOW tier, no downgrade possible
+    if (isSmallScreen) return;
+
+    // Real-time Frame Drop Monitor (Downgrade tier if under sustained frame pressure)
     let frameCount = 0;
     let lastTime = performance.now();
     let lowFpsFrames = 0;

@@ -91,6 +91,9 @@ export default function BackgroundEngine() {
 
   // Section Observer to trigger dynamic background morphing
   useEffect(() => {
+    // Mobile: skip — BackgroundEngine won't render
+    if (isMobile) return;
+
     const sectionIds: SectionMood[] = [
       "hero",
       "journey",
@@ -121,12 +124,14 @@ export default function BackgroundEngine() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   const activeMood = SECTION_MOODS[currentSection] || SECTION_MOODS.hero;
 
   // Layer 3: Interactive Particle Engine Canvas
   useEffect(() => {
+    // Mobile: skip — BackgroundEngine won't render
+    if (isMobile) return;
     if (!perf.enableParticles) return;
 
     const canvas = canvasRef.current;
@@ -222,6 +227,9 @@ export default function BackgroundEngine() {
   }, [activeMood.glowRgb, isMobile, perf.enableParticles, perf.particleCount, perf.tier]);
 
   const animateOrbs = !isMobile && perf.tier !== "LOW";
+
+  // Mobile: return null after all hooks have been called (React rules of hooks)
+  if (isMobile) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030509]">

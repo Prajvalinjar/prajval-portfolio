@@ -52,7 +52,7 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${ibmPlexMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#050505] text-[#FFFFFF] font-inter overflow-x-hidden cursor-none">
+      <body className="min-h-full flex flex-col bg-[#050505] text-[#FFFFFF] font-inter overflow-x-hidden md:cursor-none">
         <CustomCursor />
         <TransitionProvider>
           {children}

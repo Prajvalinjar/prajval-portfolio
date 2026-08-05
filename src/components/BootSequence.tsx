@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AiCoreGraphic from "./AiCoreGraphic";
 import { useTransition } from "./TransitionProvider";
 import { soundEngine } from "@/utils/audio";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface OSBootStep {
   timeMs: number;
@@ -20,6 +21,7 @@ const OS_BOOT_STEPS: OSBootStep[] = [
 
 export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = ({ onUnlockScroll }) => {
   const { hasBooted, markAsBooted } = useTransition();
+  const isMobile = useIsMobile();
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -57,7 +59,11 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
       return;
     }
 
-    const totalDurationMs = isRepeatVisit ? 600 : 1200;
+    // Mobile: Much faster boot — 400ms first visit, 200ms repeat
+    // Desktop: 1200ms first visit, 600ms repeat
+    const totalDurationMs = isMobile
+      ? (isRepeatVisit ? 200 : 400)
+      : (isRepeatVisit ? 600 : 1200);
     const intervalMs = 20;
     let elapsedMs = 0;
 
@@ -88,12 +94,12 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
           setIsBooting(false);
           if (onUnlockScroll) onUnlockScroll();
           markAsBooted();
-        }, 150);
+        }, isMobile ? 80 : 150);
       }
     }, intervalMs);
 
     return () => clearInterval(interval);
-  }, [hasBooted, isRepeatVisit, markAsBooted, onUnlockScroll]);
+  }, [hasBooted, isMobile, isRepeatVisit, markAsBooted, onUnlockScroll]);
 
   if (!mounted) return null;
 
@@ -104,8 +110,12 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
           <motion.div
             initial={{ opacity: 1 }}
             animate={{ opacity: 1, scale: isPulseExpanding ? 1.02 : 1 }}
-            exit={{ opacity: 0, scale: 1.05, filter: "blur(16px)" }}
-            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            // Mobile: no expensive blur exit animation
+            exit={isMobile
+              ? { opacity: 0 }
+              : { opacity: 0, scale: 1.05, filter: "blur(16px)" }
+            }
+            transition={{ duration: isMobile ? 0.2 : 0.35, ease: [0.25, 1, 0.5, 1] }}
             className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-12 bg-[#030509] text-white overflow-hidden pointer-events-auto select-none"
           >
             {/* Ambient Grid Background */}
@@ -118,7 +128,8 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
             <div className="w-full max-w-5xl flex items-center justify-between z-20">
               <div className="flex items-center gap-2.5">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-75"></span>
+                  {/* Static dot on mobile, pinging on desktop */}
+                  {!isMobile && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-75"></span>}
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00E5FF]"></span>
                 </span>
                 <span className="text-[10px] font-mono tracking-widest text-cyan-400/80 uppercase font-semibold">
@@ -128,19 +139,31 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
 
               <button
                 onClick={toggleSound}
-                className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-[10px] font-mono tracking-wider text-secondary/70 hover:text-white hover:border-cyan-400/40 transition-all cursor-pointer active:scale-95 shadow-sm"
+                className={`flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono tracking-wider text-secondary/70 hover:text-white hover:border-cyan-400/40 transition-all cursor-pointer active:scale-95 shadow-sm ${
+                  isMobile ? "" : "backdrop-blur-md"
+                }`}
               >
                 <span>{soundEnabled ? "🔊 SOUND ON" : "🔇 SOUND OFF"}</span>
               </button>
             </div>
 
-            {/* Center Area: Lightweight AI Core Graphic & OS Boot Line */}
+            {/* Center Area: AI Core Graphic (desktop only) & OS Boot Line */}
             <div className="flex flex-col items-center justify-center gap-6 my-auto z-20">
-              <AiCoreGraphic
-                progress={progress}
-                activePhase={progress < 35 ? 1 : progress < 70 ? 2 : 3}
-                isComplete={isPulseExpanding}
-              />
+              {/* Skip AiCoreGraphic on mobile — multiple rotating/pulsing rings waste GPU */}
+              {!isMobile && (
+                <AiCoreGraphic
+                  progress={progress}
+                  activePhase={progress < 35 ? 1 : progress < 70 ? 2 : 3}
+                  isComplete={isPulseExpanding}
+                />
+              )}
+
+              {/* Mobile: Simple minimal loader instead */}
+              {isMobile && (
+                <div className="w-16 h-16 rounded-full border-2 border-[#00E5FF]/30 border-t-[#00E5FF] flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#00E5FF]" />
+                </div>
+              )}
 
               <div className="flex flex-col items-center justify-center min-h-[50px] text-center px-4">
                 <motion.div
@@ -175,3 +198,4 @@ export const BootSequenceComponent: React.FC<{ onUnlockScroll?: () => void }> = 
 };
 
 export default React.memo(BootSequenceComponent);
+

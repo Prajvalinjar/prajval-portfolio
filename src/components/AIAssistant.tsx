@@ -4,14 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "./ToastContext";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
-function AIGlyph() {
+function AIGlyph({ isMobile }: { isMobile: boolean }) {
   return (
     <div className="relative w-8 h-8 flex items-center justify-center rounded-full bg-accent/5 border border-accent/20">
-      {/* 3 nodes */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent animate-[pulse_6s_ease-in-out_infinite]" />
-      <div className="absolute bottom-2 left-2 w-1 h-1 rounded-full bg-accent animate-[pulse_6s_ease-in-out_infinite_1s]" />
-      <div className="absolute bottom-2 right-2 w-1 h-1 rounded-full bg-accent animate-[pulse_6s_ease-in-out_infinite_2s]" />
+      {/* 3 nodes — static on mobile, pulsing on desktop */}
+      <div className={`absolute top-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent ${isMobile ? "" : "animate-[pulse_6s_ease-in-out_infinite]"}`} />
+      <div className={`absolute bottom-2 left-2 w-1 h-1 rounded-full bg-accent ${isMobile ? "" : "animate-[pulse_6s_ease-in-out_infinite_1s]"}`} />
+      <div className={`absolute bottom-2 right-2 w-1 h-1 rounded-full bg-accent ${isMobile ? "" : "animate-[pulse_6s_ease-in-out_infinite_2s]"}`} />
       {/* Connections */}
       <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 32 32">
         <path d="M16 9 L9 23 L23 23 Z" fill="none" stroke="currentColor" className="text-accent" strokeWidth="0.5" />
@@ -25,6 +26,7 @@ export default function AIAssistant() {
   const [showButton, setShowButton] = useState(false);
   const { showToast } = useToast();
   const pathname = usePathname();
+  const isMobile = useIsMobile();
 
   const panelRef = useRef<HTMLDivElement>(null);
   const fabRef = useRef<HTMLButtonElement>(null);
@@ -120,6 +122,16 @@ export default function AIAssistant() {
     }
   };
 
+  // Mobile: near-opaque bg, no blur. Desktop: glassmorphism.
+  const panelClassName = isMobile
+    ? "mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/97 border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] p-5 pointer-events-auto"
+    : "mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/95 backdrop-blur-xl border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_0_30px_rgba(0,229,255,0.15)] p-5 pointer-events-auto";
+
+  // Mobile: subtle static border, no glow shadow. Desktop: full glassmorphism with glow.
+  const fabClassName = isMobile
+    ? "pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/95 border border-[#00E5FF]/30 active:scale-[0.94] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+    : "pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/85 backdrop-blur-xl border border-white/15 md:border-white/10 hover:border-accent/40 hover:bg-[#0a0a0a] active:scale-[0.94] transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.25)] md:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)] group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none";
+
   return (
     <div className="fixed bottom-4 right-[14px] sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-none">
       
@@ -131,10 +143,10 @@ export default function AIAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.92 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-3.5 w-72 sm:w-80 rounded-2xl bg-[#030303]/95 backdrop-blur-xl border border-white/15 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_0_30px_rgba(0,229,255,0.15)] p-5 pointer-events-auto"
+            className={panelClassName}
           >
             <div className="flex items-start gap-3 mb-4">
-              <AIGlyph />
+              <AIGlyph isMobile={isMobile} />
               <div>
                 <p className="text-[13px] text-white/90 leading-relaxed">
                   Hello.<br/>
@@ -177,9 +189,9 @@ export default function AIAssistant() {
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-label="Toggle Portfolio AI Guide"
-            className="pointer-events-auto flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3 rounded-full bg-[#050505]/85 backdrop-blur-xl border border-white/15 md:border-white/10 hover:border-accent/40 hover:bg-[#0a0a0a] active:scale-[0.94] transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.25)] md:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.8)] group focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:outline-none"
+            className={fabClassName}
           >
-            <AIGlyph />
+            <AIGlyph isMobile={isMobile} />
             <div className="hidden md:flex flex-col items-start pr-2 ml-3">
               <span className="text-[13px] font-semibold tracking-tight text-white/90 group-hover:text-white transition-colors">
                 AI Guide
@@ -194,3 +206,4 @@ export default function AIAssistant() {
     </div>
   );
 }
+

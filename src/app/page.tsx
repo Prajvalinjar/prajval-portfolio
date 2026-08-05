@@ -9,6 +9,7 @@ import CustomCursor from "@/components/CustomCursor";
 import HeroReveal from "@/components/HeroReveal";
 import AIAssistant from "@/components/AIAssistant";
 import LeftNavigation from "@/components/journey/LeftNavigation";
+import JourneyChapter from "@/components/journey/JourneyChapter";
 import { useTransition } from "@/components/TransitionProvider";
 import { ToastProvider } from "@/components/ToastContext";
 import { AdaptivePerformanceProvider } from "@/context/PerformanceContext";
@@ -22,9 +23,6 @@ const SectionSkeleton = () => (
 );
 
 // Below-The-Fold Chapters (Dynamically Loaded for Max Bundle Reduction)
-const JourneyChapter = dynamic(() => import("@/components/journey/JourneyChapter"), {
-  loading: SectionSkeleton,
-});
 const ProjectsChapter = dynamic(() => import("@/components/projects/ProjectsChapter"), {
   loading: SectionSkeleton,
 });
@@ -159,7 +157,7 @@ function PortfolioApp() {
               <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start w-full relative">
                 
                 {/* Animated Sidebar Column (265px width, sticky on desktop, slides in when reaching Journey) */}
-                <aside className="w-full lg:w-[265px] shrink-0 lg:sticky lg:top-20 z-40" role="navigation" aria-label="Main Portfolio Sidebar Navigation">
+                <aside className="hidden lg:block lg:w-[265px] shrink-0 lg:sticky lg:top-20 z-40" role="navigation" aria-label="Main Portfolio Sidebar Navigation">
                   <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ 

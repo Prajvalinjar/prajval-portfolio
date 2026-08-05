@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import MobileCards from "@/components/cards/MobileCards";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import HeroBackground from "./HeroBackground";
@@ -49,14 +50,14 @@ export const MobileHero: React.FC = React.memo(() => {
 
       {/* Mobile Storytelling Header Composition */}
       <div className="relative z-20 flex flex-col items-center text-center max-w-sm px-4 pt-1">
-        {/* 1. Hero Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1A]/90 border border-[#00E5FF]/40 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-2 shadow-sm backdrop-blur-md">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-ping" />
+        {/* 1. Hero Badge — no backdrop-blur, static dot (no animate-ping) */}
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#080E1A]/95 border border-[#00E5FF]/40 text-[#00E5FF] text-[10px] font-mono tracking-widest uppercase mb-2 shadow-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
           <span className="font-semibold">ENGINEERING PORTFOLIO</span>
         </div>
 
         {/* 2. Hero Message */}
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight leading-[1.15] mb-1.5 uppercase drop-shadow-md">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight leading-[1.15] mb-1.5 uppercase">
           Building <span className="bg-gradient-to-r from-white via-cyan-200 to-[#00E5FF] bg-clip-text text-transparent">Intelligent</span> Products
         </h1>
 
@@ -88,21 +89,28 @@ export const MobileHero: React.FC = React.memo(() => {
         </p>
       </div>
 
-      {/* 6. Portrait (Primary focal point, shifted 12px upward) */}
-      <div className="relative w-full flex flex-col items-center justify-center -mt-11 sm:-mt-10 z-10 pointer-events-none">
+      {/* 6. Portrait — one-time entrance animation, then fully static */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="relative w-full flex flex-col items-center justify-center -mt-11 sm:-mt-10 z-10 pointer-events-none"
+      >
         <div className="relative w-56 h-56 sm:w-64 sm:h-64 z-10">
-          <div className="absolute inset-0 w-full h-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] drop-shadow-[0_0_15px_rgba(0,229,255,0.25)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          {/* No drop-shadow filter — saves expensive GPU compositing */}
+          <div className="absolute inset-0 w-full h-full">
+            <Image
               src="/profile_cutout_clean.webp"
               alt="Prajval Mahadev Injar"
-              decoding="async"
-              fetchPriority="high"
-              className="w-full h-full object-contain object-bottom pointer-events-auto mix-blend-normal transform-gpu"
+              width={256}
+              height={256}
+              sizes="(max-width: 640px) 224px, 256px"
+              priority
+              className="w-full h-full object-contain object-bottom pointer-events-auto mix-blend-normal"
             />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* 7. Mobile Cards (Unified 12px upward shift) */}
       <div className="w-full max-w-sm px-3 z-20 relative -mt-12">
@@ -128,3 +136,4 @@ export const MobileHero: React.FC = React.memo(() => {
 
 MobileHero.displayName = "MobileHero";
 export default MobileHero;
+

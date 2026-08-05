@@ -22,3 +22,5 @@ export const HeroReveal: React.FC = React.memo(() => {
 
 HeroReveal.displayName = "HeroReveal";
 export default HeroReveal;
+
+
