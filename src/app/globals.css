@@ -182,8 +182,8 @@
     border-color: rgba(0, 229, 255, 0.18) !important;
   }
 
-  /* Remove constant glow shadows on mobile — reserve for active/hover */
-  [class*="shadow-\[0_0_"] {
+  /* Remove constant glow shadows on mobile — reserve for active/hover (excluding HUD node dot) */
+  [class*="shadow-\[0_0_"]:not(.hud-node-dot) {
     box-shadow: none !important;
   }
 
@@ -199,10 +199,68 @@
     box-shadow: 0 0 16px rgba(0, 229, 255, 0.18) !important;
   }
 
+  /* Mobile Ambient HUD Beacon Nodes (Z-index 1: Above background, below content) */
+  .hud-node-container {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .hud-node-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    z-index: 2;
+  }
+
+  .hud-node-dot-cyan {
+    background-color: #00E5FF;
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.8) !important;
+  }
+
+  .hud-node-dot-blue {
+    background-color: #38BDF8;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.8) !important;
+  }
+
+  .hud-node-dot-purple {
+    background-color: #A855F7;
+    box-shadow: 0 0 6px rgba(168, 85, 247, 0.8) !important;
+  }
+
   /* Mobile Ambient HUD Beacon Pulse Ring Animation */
   .hud-pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border-width: 1px;
+    border-style: solid;
     animation: hudNodePulse 4.5s cubic-bezier(0.16, 1, 0.3, 1) infinite !important;
     will-change: transform, opacity;
+  }
+
+  .hud-ring-cyan {
+    border-color: rgba(0, 229, 255, 0.4);
+  }
+
+  .hud-ring-blue {
+    border-color: rgba(56, 189, 248, 0.4);
+  }
+
+  .hud-ring-purple {
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+
+  /* Mobile Smooth Page Reveal (CSS-First, non-blocking) */
+  @media (max-width: 767px) {
+    .mobile-reveal {
+      animation: mobilePageReveal 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -210,22 +268,39 @@
       animation: none !important;
       opacity: 0 !important;
     }
+    .mobile-reveal {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 }
 
-/* Ambient HUD Pulse Node Animation (Compositor-friendly transform + opacity only) */
+/* Ambient HUD Pulse Node Keyframe Animation (Compositor-friendly transform + opacity only) */
 @keyframes hudNodePulse {
   0% {
-    transform: scale(0.7);
-    opacity: 0.5;
+    transform: scale(0.65);
+    opacity: 0.40;
   }
-  50% {
-    transform: scale(1.25);
+  60% {
+    transform: scale(1.15);
     opacity: 0.15;
   }
   100% {
-    transform: scale(1.5);
+    transform: scale(1.45);
     opacity: 0;
+  }
+}
+
+/* Mobile Smooth Page Reveal Keyframes */
+@keyframes mobilePageReveal {
+  0% {
+    opacity: 0.3;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

@@ -141,7 +141,7 @@ function PortfolioApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="relative flex flex-col items-center justify-start w-full min-h-screen"
+            className="relative flex flex-col items-center justify-start w-full min-h-screen mobile-reveal"
           >
             <CustomCursor />
             <BackgroundEngine />

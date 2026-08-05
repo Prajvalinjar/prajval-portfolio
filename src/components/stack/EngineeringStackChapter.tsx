@@ -17,9 +17,9 @@ export default function EngineeringStackChapter() {
       </div>
 
       {/* Mobile Ambient HUD Pulse Node (1 blue beacon, mobile only) */}
-      <div className="absolute top-12 right-6 z-0 pointer-events-none sm:hidden flex items-center justify-center w-5 h-5" aria-hidden="true">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] shadow-[0_0_5px_rgba(56,189,248,0.7)]" />
-        <div className="absolute inset-0 rounded-full border border-[#38BDF8]/40 hud-pulse-ring" />
+      <div className="hud-node-container top-12 right-6 sm:hidden" aria-hidden="true">
+        <div className="hud-node-dot hud-node-dot-blue" />
+        <div className="hud-pulse-ring hud-ring-blue" />
       </div>
 
       <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 px-4 sm:px-0">

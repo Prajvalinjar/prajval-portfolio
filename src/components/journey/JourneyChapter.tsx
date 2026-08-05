@@ -78,9 +78,9 @@ export default function JourneyChapter() {
       </div>
 
       {/* Mobile Ambient HUD Pulse Node (1 cyan beacon, mobile only) */}
-      <div className="absolute top-10 right-5 z-0 pointer-events-none sm:hidden flex items-center justify-center w-5 h-5" aria-hidden="true">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_5px_rgba(0,229,255,0.7)]" />
-        <div className="absolute inset-0 rounded-full border border-[#00E5FF]/40 hud-pulse-ring" />
+      <div className="hud-node-container top-10 right-5 sm:hidden" aria-hidden="true">
+        <div className="hud-node-dot hud-node-dot-cyan" />
+        <div className="hud-pulse-ring hud-ring-cyan" />
       </div>
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-stretch px-4 sm:px-0">
